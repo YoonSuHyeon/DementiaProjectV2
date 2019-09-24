@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="graduation">
+        <item>초졸</item>
+        <item>중졸</item>
+        <item>고졸</item>
+        <item>대졸</item>
+
+    </string-array>
+</resources>
