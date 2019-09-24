@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         database= FirebaseDatabase.getInstance().getReference();
         Button loginButton =findViewById(R.id.loginButton);
+        Button nonloginButton=findViewById(R.id.nonloginButton);
         TextView registerButton = findViewById(R.id.registerButton);
         id =findViewById(R.id.idText);
         password=findViewById(R.id.passwordText);
@@ -46,6 +47,16 @@ public class LoginActivity extends AppCompatActivity {
                 login();
 
 
+            }
+        });
+        nonloginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean membercheck =false;
+                CustomDialog customDialog = new CustomDialog(LoginActivity.this);
+                customDialog.call(membercheck);
+
+                //Test창으로 넘어가야함.
             }
         });
 
@@ -75,9 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 if(checklogin ==1 ) {
+                    boolean membercheck =true;
                     Toast.makeText(LoginActivity.this, "로그인이 되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(loginIntent);
+                    CustomDialog customDialog = new CustomDialog(LoginActivity.this);
+                    customDialog.call(membercheck);
+                    /*Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(loginIntent);*/
                 }
                 else{
                     Toast.makeText(LoginActivity.this, "로그인 실패.", Toast.LENGTH_SHORT).show();
