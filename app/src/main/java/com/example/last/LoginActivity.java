@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(checklogin ==1 ) {
                     boolean membercheck =true;
                     Toast.makeText(LoginActivity.this, "로그인이 되었습니다.", Toast.LENGTH_SHORT).show();
-                    Log.d("TAG1", "string : " + dbagreement);
+
                     if(!dbagreement){
                         CustomDialog customDialog = new CustomDialog(LoginActivity.this);
                         customDialog.call(membercheck,dbparent,id.getText().toString());
