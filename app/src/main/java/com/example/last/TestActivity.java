@@ -84,7 +84,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(problems.get(problemsnum).num.equals("1")){
+               /* if(problems.get(problemsnum).num.equals("1")){
 
                 }
 
@@ -93,10 +93,11 @@ public class TestActivity extends AppCompatActivity {
                 }
                 if(problems.get(problemsnum).num.equals("3")){
 
-                }
+                }*/
+                problemsnum++;
 
                 if(problemsnum<problems.size()){
-                       problemsnum++;
+
                        exampleTextView.setText(problems.get(problemsnum).example);
                 }
                 else{
