@@ -10,8 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        
+        <activity android:name=".TestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
         <activity android:name=".ResultActivity"></activity>
-        <activity android:name=".TestActivity" />
+        
+
         <activity
             android:name=".Popup2"
             android:theme="@style/DialogTheme" />
@@ -19,8 +25,10 @@
             android:name=".Popup"
             android:theme="@style/DialogTheme" />
         <activity android:name=".AgreeActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".SignUpActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".SplashActivity"
