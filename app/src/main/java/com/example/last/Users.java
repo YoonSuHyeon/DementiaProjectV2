@@ -19,7 +19,7 @@ public class Users {
         this.agreement = agreement;
     }
 
-    public Users(String age, String id, String password, String email, String sex, String graduation, String  authority, String level, boolean agreement) {
+    public Users(String age, String id, String password, String email, String sex, String graduation, String  authority, String level, boolean agreement,String hp,String name) {
         this.age = age;
         this.id = id;
         this.password = password;
