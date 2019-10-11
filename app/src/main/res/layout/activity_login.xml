@@ -11,27 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#93A5A5">
+        android:background="@drawable/background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="225dp"
             android:orientation="vertical"
-            android:background="@color/colorPrimaryDark">
+            >
 
             <ImageView
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                />// android:src="@drawable/logo"/>
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:layout_gravity="top"
+
+                android:src="@drawable/al2"
+
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="STORY"
-                android:textColor="#ffffffff"
+                android:text="Alzheimer's Disease"
+                android:textColor="#110E0E"
                 android:textStyle="bold"
                 android:textSize="25dp"
                 android:layout_marginTop="10dp"/>
@@ -40,10 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Utility"
-                android:textColor="#ffffffff"
+                android:text="Prevention"
+                android:textColor="#141212"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 />
 
         </LinearLayout>
@@ -51,7 +53,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <EditText
                 android:layout_width="280dp"
@@ -63,9 +66,9 @@
                 android:textColorHint="#ffffffff"
                 android:id="@+id/idText"
                 android:layout_marginTop="40dp"
-                android:background="@color/colorPrimary"/>
-            //android:drawableStart="@drawable/ic_person_black_24dp"
-            //android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:background="@drawable/editform"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawableLeft="@drawable/ic_person_black_24dp"/>
 
             <EditText
                 android:inputType="textPassword"
@@ -78,16 +81,22 @@
                 android:textColorHint="#ffffffff"
                 android:id="@+id/passwordText"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"/>
-            //android:drawableStart="@drawable/ic_lock_outline_black_24dp"
-            //android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:background="@drawable/editform"
+                android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"/>
 
             <Button
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:textColor="#ffffffff"
+                android:textColor="#0E0B0B"
+                android:background="@drawable/loginbutton"
+                android:shadowColor="#A82511"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+
 
                 android:text="로그인"
                 android:id="@+id/loginButton"
@@ -97,15 +106,21 @@
 
 
             <Button
+                android:layout_marginTop="10dp"
                 android:id="@+id/nonloginButton"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-
+                android:background="@drawable/loginbutton"
+                android:shadowColor="#A8842F"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:textStyle="bold"
                 android:text="비회원로그인"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#FFFFFF"
-                android:textSize="25dp" />
+                android:textColor="#0F0C0C"
+                android:textSize="20dp" />
             //android:background="@drawable/button_cornor"
 
 
@@ -116,6 +131,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="회원가입"
+                android:textColor="#0E0B0B"
                 android:textSize="18dp" />
 
             <TextView
@@ -124,6 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:textColor="#0E0B0B"
                 android:text="ID/PW 찾기"
                 android:textSize="18dp" />
         </LinearLayout>

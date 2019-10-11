@@ -3,12 +3,14 @@ package com.example.last;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -20,11 +22,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText id,email,password,password2,name,age;
+    Button picker_ymd;
     RadioButton man,woman,userRadioButton,adminRadioButton;
+    private DatePickerDialog.OnDateSetListener callbackMethod;
     private Spinner spinner;
     private ArrayAdapter adapter;
     private DatabaseReference database;
@@ -42,6 +50,28 @@ public class SignUpActivity extends AppCompatActivity {
         password2=findViewById(R.id.passwordText2);
         name =findViewById(R.id.nameText);
         age=findViewById(R.id.ageText);
+        picker_ymd = findViewById(R.id.picker_ymd);
+        picker_ymd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                DatePickerDialog dialog = new DatePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        try{
+                            Date d = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(year+"-"+(month+1)+"-"+dayOfMonth);
+                            int m=month+1;
+                            age.setText(year + "." +m +"." + dayOfMonth);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }}
+            },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                dialog.getDatePicker().setCalendarViewShown(false);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.getDatePicker().setSpinnersShown(true);
+                dialog.show();
+            }
+        });
 
         man =findViewById(R.id.genderMan);
         woman=findViewById(R.id.genderWoman);
@@ -50,6 +80,8 @@ public class SignUpActivity extends AppCompatActivity {
         adminRadioButton=findViewById(R.id.adminRadioButton);
 
         Button register = findViewById(R.id.registerButton);
+
+
 
         spinner = (Spinner)findViewById(R.id.graduationSpinner);
         adapter = ArrayAdapter.createFromResource(this,R.array.graduation,android.R.layout.simple_spinner_dropdown_item);
@@ -64,6 +96,9 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
+
+
+
 private void create_mem()
 {
 

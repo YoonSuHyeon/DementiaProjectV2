@@ -10,20 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#93A5A5">
+        android:background="@drawable/background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#DA520D">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="회원가입"
-                android:textColor="#ffffffff"
+                android:textColor="#050505"
                 android:textStyle="bold"
                 android:textSize="30dp"
                 android:layout_marginTop="10dp"
@@ -48,7 +48,7 @@
                     android:layout_marginLeft="66dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/editform"
 
                     android:hint="이름을 입력하세요"
                     android:padding="10dp"
@@ -70,7 +70,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="66dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/editform"
 
                     android:hint="아이디를 입력하세요"
                     android:padding="10dp"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/editform"
 
                 android:hint="비밀번호를 입력하세요"
                 android:inputType="textPassword"
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/editform"
 
                 android:hint="비밀번호를 다시 입력하세요"
                 android:inputType="textPassword"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/editform"
 
                 android:hint="이메일을 입력하세요"
                 android:padding="10dp"
@@ -128,18 +128,42 @@
             //android:drawableStart="@drawable/ic_mail_outline_black_24dp"
             //android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
 
-            <EditText
-                android:id="@+id/ageText"
-                android:layout_width="280dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
 
-                android:hint="나이"
-                android:padding="10dp"
-                android:textColor="#ffffffff"
-                android:textColorHint="#ffffffff" />
+                <EditText
+                    android:id="@+id/ageText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="66dp"
+                    android:background="@drawable/editform"
+
+                    android:hint="생년월일"
+                    android:padding="10dp"
+                    android:textColor="#ffffffff"
+                    android:textColorHint="#ffffffff" />
+
+                <Button
+                    android:id="@+id/picker_ymd"
+                    android:layout_width="125dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_register"
+                    android:text="날짜 선택"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="#ffffffff"/>
+
+
+
+            </LinearLayout>
+
+
             <Spinner
                 android:id="@+id/graduationSpinner"
                 android:layout_width="280dp"
@@ -201,7 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="#E74949"
+                android:background="@drawable/btn_register"
                 android:text="가입하기"
 
                 android:textColor="#ffffffff"
