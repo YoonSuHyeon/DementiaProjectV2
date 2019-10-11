@@ -107,12 +107,10 @@
                 android:background="@drawable/editform"
 
                 android:hint="비밀번호를 다시 입력하세요"
-                android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColor="#ffffffff"
                 android:textColorHint="#ffffffff" />
-           // android:drawableStart="@drawable/ic_lock_outline_black_24dp"
-            //android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+
             <EditText
                 android:id="@+id/emailText"
                 android:layout_width="280dp"
@@ -125,8 +123,40 @@
                 android:padding="10dp"
                 android:textColor="#ffffffff"
                 android:textColorHint="#ffffffff" />
-            //android:drawableStart="@drawable/ic_mail_outline_black_24dp"
-            //android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/hpEditText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="66dp"
+                    android:background="@drawable/editform"
+
+                    android:hint="전화번호"
+                    android:padding="10dp"
+                    android:textColor="#ffffffff"
+                    android:textColorHint="#ffffffff" />
+
+                <Button
+                    android:id="@+id/hpButton"
+                    android:layout_width="125dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_register"
+                    android:text="인증"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="#ffffffff"/>
+
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +199,7 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"></Spinner>
+                android:layout_marginTop="10dp" />
 
             <RadioGroup
                 android:id="@+id/authorityGroup"

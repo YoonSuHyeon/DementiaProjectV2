@@ -9,35 +9,9 @@ public class Users {
     private String graduation;
     private String authority;
     private String level;
-    private  boolean agreement;
-
-    public boolean isAgreement() {
-        return agreement;
-    }
-
-    public void setAgreement(boolean agreement) {
-        this.agreement = agreement;
-    }
-
-    public Users(String age, String id, String password, String email, String sex, String graduation, String  authority, String level, boolean agreement,String hp,String name) {
-        this.age = age;
-        this.id = id;
-        this.password = password;
-        this.email = email;
-        this.sex = sex;
-        this.graduation = graduation;
-        this.level = level;
-        this.authority=authority;
-        this.agreement=agreement;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
+    private String hp;
+    private String name;
+    private boolean agreement;
 
     public String getAge() {
         return age;
@@ -87,6 +61,14 @@ public class Users {
         this.graduation = graduation;
     }
 
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
     public String getLevel() {
         return level;
     }
@@ -94,4 +76,44 @@ public class Users {
     public void setLevel(String level) {
         this.level = level;
     }
+
+    public String getHp() {
+        return hp;
+    }
+
+    public void setHp(String hp) {
+        this.hp = hp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isAgreement() {
+        return agreement;
+    }
+
+    public void setAgreement(boolean agreement) {
+        this.agreement = agreement;
+    }
+
+     //나이,아이디,패스워드,이메일,성,졸업,권한,레벨,핸드폰,이름,동의
+    public Users(String age, String id, String password, String email, String sex, String graduation, String authority, String level, String hp, String name, boolean agreement) {
+        this.age = age;
+        this.id = id;
+        this.password = password;
+        this.email = email;
+        this.sex = sex;
+        this.graduation = graduation;
+        this.authority = authority;
+        this.level = level;
+        this.hp = hp;
+        this.name = name;
+        this.agreement = agreement;
+    }
 }
+

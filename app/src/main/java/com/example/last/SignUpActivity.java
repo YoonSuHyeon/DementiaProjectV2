@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import static com.example.last.R.id.graduationSpinner;
+
 public class SignUpActivity extends AppCompatActivity {
     EditText id,email,password,password2,name,age;
     Button picker_ymd;
@@ -83,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-        spinner = (Spinner)findViewById(R.id.graduationSpinner);
+        spinner = (Spinner)findViewById(graduationSpinner);
         adapter = ArrayAdapter.createFromResource(this,R.array.graduation,android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         register.setOnClickListener(new View.OnClickListener(){
@@ -135,49 +137,54 @@ private void create_mem()
                     Toast.makeText(this,"이메일 형식이 올바르지 않습니다.\nex)abc@gmail.com",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                         checknum =0;
+                        checknum = 0;
                         DatabaseReference table_user = database.child("Users");
-                        ValueEventListener  vListener=new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                         ValueEventListener vListener = new ValueEventListener() {
+                          @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                                            Log.d("TAG1", "datattt : " + noteDataSnapshot);
-                                            Log.d("TAG1", "dataaaa : " + noteDataSnapshot.getChildren());
-                                            for (DataSnapshot da : dataSnapshot.getChildren()) {
+                              for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                                  Log.d("TAG1", "datattt : " + noteDataSnapshot);
+                                  Log.d("TAG1", "dataaaa : " + noteDataSnapshot.getChildren());
+                                  for (DataSnapshot da : dataSnapshot.getChildren()) {
 
-                                                String checkId = id.getText().toString();
-                                                String dbId = da.child("id").getValue(String.class);
-                                                Log.d("TAG1", "string : " + dbId);
-                                                if (checkId.equals(dbId)) {
-                                                    Toast.makeText(SignUpActivity.this, "아이디가 이미 있습니다.", Toast.LENGTH_SHORT).show();
-                                                    checknum = 1;
-                                                    break;
+                                      String checkId = id.getText().toString();
+                                      String dbId = da.child("id").getValue(String.class);
+                                      Log.d("TAG1", "string : " + dbId);
+                                      if (checkId.equals(dbId)) {
+                                          Toast.makeText(SignUpActivity.this, "아이디가 이미 있습니다.", Toast.LENGTH_SHORT).show();
+                                          checknum = 1;
+                                          break;
 
-                                                }
-                                            }
-                                        }
-                                        if (checknum == 0) {
-                                            Users user = new Users(age.getText().toString(), id.getText().toString(), password.getText().toString(), email.getText().toString(), gendered, spinner.getSelectedItem().toString(),
-                                                    authority, "0", false);
-                                            database.child("Users").push().setValue(user);
-                                            Toast.makeText(SignUpActivity.this, "회원가입했습니다.", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    }
+                                      }
+                                  }
+                              }
+                              if (checknum == 0) {
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                  Users user = new Users(age.getText().toString(), id.getText().toString(), password.getText().toString(), email.getText().toString(), gendered, spinner.getSelectedItem().toString(),
+                                          authority, "0", "101010", name.getText().toString(), false);
 
-                                    }
 
-                                };
+                                  database.child("Users").push().setValue(user);
+                                  Toast.makeText(SignUpActivity.this, "회원가입했습니다.", Toast.LENGTH_SHORT).show();
+                                  Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                  startActivity(intent);
+
+                              }
+                          }
+                @Override
+                public void onCancelled (@NonNull DatabaseError databaseError){
+
+                }
+
+            }
+
+            ;
                                 table_user.addListenerForSingleValueEvent(vListener);
 
 
-                            }
-                        }
+        }
+    }
  //약관 동의 했는지 확인하기 .
 
 }
