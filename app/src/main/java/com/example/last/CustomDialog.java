@@ -12,8 +12,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class CustomDialog {
     Button btn_next,btn_ok1,btn_ok2;
+    private DatabaseReference database;
     private Context context;
     public int TERMS_AGREE_1 = 0; //체크 안될 시 0  체크시 1
     public int TERMS_AGREE_2 = 0;
@@ -27,7 +31,7 @@ public class CustomDialog {
         this.context = context;
     }
 
-    public void call(final boolean membercheck){
+    public void call(final boolean membercheck, final String dbparent, String id){
         final Dialog dlg = new Dialog(context);
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dlg.setContentView(R.layout.activity_agree);
@@ -126,6 +130,8 @@ public class CustomDialog {
                         dlg.dismiss();
                     }
                     else{
+                        database= FirebaseDatabase.getInstance().getReference();
+                        database.child("Users").child(dbparent).child("agreement").setValue(true);
                         //fire 접근후 agreement true로 변경
                         Intent intent = new Intent(dlg.getContext(),HomeActivity.class);
                         dlg.getContext().startActivity(intent);

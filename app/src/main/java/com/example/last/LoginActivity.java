@@ -20,8 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private DatabaseReference database;
-    EditText id,password;
-    int checklogin;
+    private EditText id,password;
+    private int checklogin;
+    private String dbparent;
+    private boolean dbagreement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean membercheck =false;
                 CustomDialog customDialog = new CustomDialog(LoginActivity.this);
-                customDialog.call(membercheck);
+                customDialog.call(membercheck,null,null);
 
                 //Test창으로 넘어가야함.
             }
@@ -76,9 +78,10 @@ public class LoginActivity extends AppCompatActivity {
                         String dbId = da.child("id").getValue(String.class);
                         String dbpassword = da.child("password").getValue(String.class);
 
-                        Log.d("TAG1", "string : " + dbId);
-                        if (checkId.equals(dbId)&&checkpassword.equals(dbpassword)) {
 
+                        if (checkId.equals(dbId)&&checkpassword.equals(dbpassword)) {
+                            dbparent=da.getKey();
+                            dbagreement=da.child("agreement").getValue(boolean.class);
                             checklogin=1;
                             break;
 
@@ -88,10 +91,17 @@ public class LoginActivity extends AppCompatActivity {
                 if(checklogin ==1 ) {
                     boolean membercheck =true;
                     Toast.makeText(LoginActivity.this, "로그인이 되었습니다.", Toast.LENGTH_SHORT).show();
-                    CustomDialog customDialog = new CustomDialog(LoginActivity.this);
-                    customDialog.call(membercheck);
-                    /*Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(loginIntent);*/
+
+                    if(!dbagreement){
+                        CustomDialog customDialog = new CustomDialog(LoginActivity.this);
+                        customDialog.call(membercheck,dbparent,id.getText().toString());
+                    }
+                    else{
+                        Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(loginIntent);
+                    }
+
+
                 }
                 else{
                     Toast.makeText(LoginActivity.this, "로그인 실패.", Toast.LENGTH_SHORT).show();
