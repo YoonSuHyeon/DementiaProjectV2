@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent test = new Intent(HomeActivity.this, TestActivity.class);
+                test.putExtra("member",true);
                 startActivity(test);
             }
         });

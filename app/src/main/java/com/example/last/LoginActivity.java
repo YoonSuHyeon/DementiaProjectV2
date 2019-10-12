@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         database= FirebaseDatabase.getInstance().getReference();
         Button loginButton =findViewById(R.id.loginButton);
         Button nonloginButton=findViewById(R.id.nonloginButton);
+        TextView findId=findViewById(R.id.findId);
         TextView registerButton = findViewById(R.id.registerButton);
         id =findViewById(R.id.idText);
         password=findViewById(R.id.passwordText);
@@ -58,7 +59,14 @@ public class LoginActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(LoginActivity.this);
                 customDialog.call(membercheck,null,null);
 
-                //Test창으로 넘어가야함.
+
+            }
+        });
+        findId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, FindActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -125,7 +125,7 @@ public class CustomDialog {
                 }
                 else {
                     if(membercheck == false){
-                        Intent intent = new Intent(dlg.getContext(),TestActivity.class);
+                        Intent intent = new Intent(dlg.getContext(),NonloginActivity.class);
                         dlg.getContext().startActivity(intent);
                         dlg.dismiss();
                     }

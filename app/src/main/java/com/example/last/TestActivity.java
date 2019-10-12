@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -40,7 +42,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
-
 import static android.speech.tts.TextToSpeech.ERROR;
 
 
@@ -62,20 +63,22 @@ public class TestActivity extends AppCompatActivity {
     AssetManager am;
     InputStream is = null;
     Double latitude=0.0,longitude=0.0;
-
+    final int PERMISSION = 1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
 
-        
+        if (Build.VERSION.SDK_INT >= 23) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO,Manifest.permission.INTERNET,Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
+        }
 
         am = getResources().getAssets();
         String num = null;
 
         StringTokenizer tokens;
-        final int PERMISSION = 1;
+
         problems = new ArrayList<>();
         exampleTextView = (TextView) findViewById(R.id.exampleTextView); //문제 넣을 텍스트뷰
         exampleImageView = (ImageView) findViewById(R.id.exampleImageView);
@@ -86,9 +89,7 @@ public class TestActivity extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName());//음성 검색을 위한
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-kr");//인식할 언어 설정
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE}, PERMISSION);
-        }
+
 
 
         startLocationService();//내위치 경도 위도 값 추출하는 함수 호출
@@ -220,7 +221,7 @@ public class TestActivity extends AppCompatActivity {
                         int num1 = Integer.parseInt(strnum);
                         Log.d("TAG", "problemsnum: "+problemsnum);
                         Log.d("TAG", "problems.size(): "+problems.size());
-                        Log.d("TAG", "num1: "+num1);
+                        Log.d("TAG", "텍스트 문제번호: "+num1);
                         Log.d("TAG", "score1: "+score);
                         switch (num1) {
                             case 1:
@@ -230,6 +231,8 @@ public class TestActivity extends AppCompatActivity {
                                 problemsnum++;
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
 
+
+                                //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 String str = problems.get(problemsnum).example;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
@@ -240,6 +243,7 @@ public class TestActivity extends AppCompatActivity {
                                 problemsnum++;
                                 answerEditText.setText("");
 
+                                //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
@@ -250,6 +254,7 @@ public class TestActivity extends AppCompatActivity {
                                 answerEditText.setText("");
                                 problemsnum++;
 
+                                //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
@@ -260,6 +265,7 @@ public class TestActivity extends AppCompatActivity {
                                 answerEditText.setText("");
                                 problemsnum++;
 
+                                //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
@@ -271,50 +277,40 @@ public class TestActivity extends AppCompatActivity {
                                 answerEditText.setText("");
                                 problemsnum++;
 
+                                //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 6:
                             case 7:
+                                if(!answerEditText.getText().toString().equals("")&&(answerEditText.getText().toString().equals(state))||(answerEditText.getText().toString().equals(city))||(answerEditText.getText().toString().equals(town)))
+                                    score += 1; //1번문제를 맞췄을시
+                                problemsnum++;
+                                answerEditText.setText("");
+
+                                //////다음문제 출력
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+                                break;
                             case 8:
                                 if(!answerEditText.getText().toString().equals("")&&(answerEditText.getText().toString().equals(state))||(answerEditText.getText().toString().equals(city))||(answerEditText.getText().toString().equals(town)))
                                     score += 1; //1번문제를 맞췄을시
                                 problemsnum++;
-                                answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
-                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
-                                str = problems.get(problemsnum).example;
-                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
-                                break;
-                            case 9:
-                            case 10:
-                            case 11:
-                            case 12:
-                                if(!answerEditText.getText().toString().equals("")&&
-                                        (Integer.parseInt(answerEditText.getText().toString())==Integer.parseInt(problems.get(problemsnum).answer)))
-                                    score += 1; //9번 정답 맞는지 확인하기 .
-
                                 answerEditText.setText("");
-                                problemsnum++;
 
-                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
-                                str = problems.get(problemsnum).example;
-                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
-                                break;
-                            case 13:
-                                exampleButton.setEnabled(false);//버튼 비활성화
-                                if(!answerEditText.getText().toString().equals("")&&
-                                        (Integer.parseInt(answerEditText.getText().toString())==Integer.parseInt(problems.get(problemsnum).answer)))
-                                    score += 1; //9번 정답 맞는지 확인하기 .
+                                /////////////////////////////////////////////////////
 
-                                answerEditText.setText("");
-                                problemsnum++;
 
-                                answerEditText.setText("호출된 단어를 다 듣고 따라 말하십시오 그 후에 버튼이 활성화됩니다.ㄴ");
+                                //////다음문제 출력
+
+                                exampleButton.setEnabled(false);
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+
                                 new Handler().postDelayed(new Runnable() {//tts출력후 음성인식 시작
                                     @Override
                                     public void run() {
@@ -327,7 +323,7 @@ public class TestActivity extends AppCompatActivity {
                                 },18500);
 
                                 break;
-                            case 14:
+                            case 9:
                                 String answer = problems.get(problemsnum).answer;
                                 StringTokenizer tokens = new StringTokenizer(answer,",");
                                 buffer = new String[tokens.countTokens()];
@@ -344,20 +340,32 @@ public class TestActivity extends AppCompatActivity {
                                     }
                                 }
 
+
+                                //////다음문제 출력
                                 problemsnum++;
-                                answerEditText.setText("");
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
-
-                                is = am.open(problems.get(problemsnum).url+".png");
-                                Bitmap bm= BitmapFactory.decodeStream(is);
-                                exampleImageView.setImageBitmap(bm);
-
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
-                            case 15:
+
+
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
+                                    score += 1;
+                                answerEditText.setText("");
+
+                                problemsnum++;
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+                                break;
+                            case 14:
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().contains(buffer[0]))&&(answerEditText.getText().toString().contains(buffer[1]))&&(answerEditText.getText().toString().contains(buffer[2])))
                                     score += 1;
                                 Log.d("TAG", "answer1: "+problems.get(problemsnum).answer);
                                 problemsnum++;
@@ -365,10 +373,20 @@ public class TestActivity extends AppCompatActivity {
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
-
+                                break;
+                            case 15:
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
+                                    score += 1;
+                                problemsnum++;
                                 is = am.open(problems.get(problemsnum).url+".png");
-                                bm= BitmapFactory.decodeStream(is);
+                                Bitmap bm= BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
+
+                                answerEditText.setText("");
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 16:
                                 if(!answerEditText.getText().toString().equals("")&&
@@ -377,7 +395,43 @@ public class TestActivity extends AppCompatActivity {
                                 Log.d("TAG", "answer2: "+problems.get(problemsnum).answer);
                                 Log.d("TAG", "score2: "+score);
                                 problemsnum++;
+
+                                is = am.open(problems.get(problemsnum).url+".png");
+                                bm= BitmapFactory.decodeStream(is);
+                                exampleImageView.setImageBitmap(bm);
+
+                                answerEditText.setText("");
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
+                            case 17:
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
+                                    score+=1;
+
+                                problemsnum++;
+                                exampleButton.setEnabled(false);
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+                                new Handler().postDelayed(new Runnable() {//tts출력후 음성인식 시작
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "음석인식이 활성화되었습니다. 말을 한 후에  확인버튼을 누르세요. ", Toast.LENGTH_SHORT).show();
+                                        SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+                                        speechRecognizer.setRecognitionListener(listener);
+                                        speechRecognizer.startListening(intent);
+                                        exampleButton.setEnabled(true);
+                                    }
+                                },18500);
+                            case 18:
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().equals(speak)))
+                                    score+=1;
+                                problemsnum++;
+
                         }
                     } else {
                         Intent loginIntent = new Intent(TestActivity.this, ResultActivity.class);
@@ -393,6 +447,7 @@ public class TestActivity extends AppCompatActivity {
         });
 
     }
+
     private RecognitionListener listener = new RecognitionListener(){
 
         @Override
@@ -544,6 +599,7 @@ public class TestActivity extends AppCompatActivity {
         }
 
         Address address1 = address.get(0);
+        //address.clear();
         return address1.getAddressLine(0).toString();
     }
     @Override
