@@ -22,7 +22,7 @@ public class CustomDialog {
     public int TERMS_AGREE_1 = 0; //체크 안될 시 0  체크시 1
     public int TERMS_AGREE_2 = 0;
     public int TERMS_AGREE_3 = 0;
-
+    //hello gittest !!!!!!
     AppCompatCheckBox check1; //첫번째 동의
     AppCompatCheckBox check2; //두번째 동의
     AppCompatCheckBox check3; //모두 동의
