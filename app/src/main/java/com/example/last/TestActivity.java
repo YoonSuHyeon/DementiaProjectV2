@@ -154,8 +154,16 @@ public class TestActivity extends AppCompatActivity {
                 break;
         }
 
-
-
+        boolean member = getIntent().getBooleanExtra("member",true);
+        String name = getIntent().getStringExtra("name");
+        String gender = getIntent().getStringExtra("gender");
+        String graduation = getIntent().getStringExtra("graduation");
+        int age = getIntent().getIntExtra("age",0);
+        Log.d("TAG", "name: "+name);
+        Log.d("TAG", "gender: "+gender);
+        Log.d("TAG", "graduation: "+graduation);
+        Log.d("TAG", "age: "+age);
+        Log.d("TAG", "member: "+member);
         try {
             is = am.open("test.txt");
 
@@ -331,7 +339,7 @@ public class TestActivity extends AppCompatActivity {
                                             exampleButton.setEnabled(true);
                                         }
                                     }
-                                    },100);
+                                },100);
 
 
                                 break;
@@ -448,11 +456,12 @@ public class TestActivity extends AppCompatActivity {
 
                                 break;
                             case 18:
-                                Log.d("TAG", "speak: "+speak);
-                                answerEditText.setEnabled(true);
                                 if(!answerEditText.getText().toString().equals("")&&
-                                        (answerEditText.getText().toString().equals(speak)))
+                                        (speak.equals(problems.get(problemsnum).answer)))
                                     score+=1;
+                                answerEditText.setText("");
+                                Log.d("TAG", "speak: "+speak);
+                                //answerEditText.setEnabled(true);
                                 problemsnum++;
 
                         }
@@ -463,12 +472,14 @@ public class TestActivity extends AppCompatActivity {
                         if(member){//회원
                             loginIntent.putExtra("member",member);
                             loginIntent.putExtra("score",score);
+                            Log.d("TAG", "member: "+member);
+                            Log.d("TAG", "score: "+score);
                             startActivity(loginIntent);
                         }else{//비회원
                             String name = getIntent().getStringExtra("name");
                             String gender = getIntent().getStringExtra("gender");
                             String graduation = getIntent().getStringExtra("graduation");
-                            String age = getIntent().getStringExtra("age");
+                            int age = getIntent().getIntExtra("age",0);
 
                             loginIntent.putExtra("name",name);
                             loginIntent.putExtra("gender",gender);
@@ -476,10 +487,16 @@ public class TestActivity extends AppCompatActivity {
                             loginIntent.putExtra("age",age);
                             loginIntent.putExtra("member",member);
                             loginIntent.putExtra("score",score);
+
+                            Log.d("TAG", "name: "+name);
+                            Log.d("TAG", "gender: "+gender);
+                            Log.d("TAG", "graduation: "+graduation);
+                            Log.d("TAG", "age: "+age);
+                            Log.d("TAG", "member: "+member);
+                            Log.d("TAG", "score: "+score);
                             startActivity(loginIntent);
                         }
-                        am.close();
-                        mainam.close();
+
 
                         //if 문을 걸어서 intent 이 member 를 false 비회원  이필요한거 다보낸다
 
@@ -575,6 +592,7 @@ public class TestActivity extends AppCompatActivity {
             ArrayList<String> list = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);//사용자가 말한 데이터를 ArrayList에 저장
             speak = list.get(0);//사용자의 말을 음성인식한 데이터를 String 형 speak변수에 저장
             speak = speak.replaceAll(" ","");// 사용자가 말한 문자열이 띄어쓰기가 있으면 공백 제거
+            list.clear();
         }
 
         @Override
