@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="graduation">
+        <item>무학력</item>
         <item>초졸</item>
         <item>중졸</item>
         <item>고졸</item>

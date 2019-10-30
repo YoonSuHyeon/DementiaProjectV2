@@ -57,24 +57,58 @@ public class TestActivity extends AppCompatActivity {
 
     int problemsnum = 0;
     int year, month, day, week, score = 0;
-    String state = null, city=null, town=null;  //state: 도, 특별시, 광역시  city: 시 군  town: 면/동/읍
+    String state = null, city = null, town = null;  //state: 도, 특별시, 광역시  city: 시 군  town: 면/동/읍
     String season = null, days = null, speak = null;
     String[] buffer, buffer1;
-    AssetManager am;
-    InputStream is = null;
-    Double latitude=0.0,longitude=0.0;
+    AssetManager am, mainam;
+    InputStream is = null, MainImage = null;
+    Double latitude = 0.0, longitude = 0.0;
+    Bitmap bm, mainbm;
     final int PERMISSION = 1;
-
+    String uid;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        exampleButton=findViewById(R.id.exampleButton);
 
 
+
+        exampleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(TestActivity.this, ResultActivity.class);
+                boolean member = getIntent().getBooleanExtra("member", true);
+                if (member) {//회원
+                    String uid = getIntent().getStringExtra("uid");
+                    loginIntent.putExtra("member", member);
+                    loginIntent.putExtra("score", score);
+                    loginIntent.putExtra("uid", uid);
+                    //나중에 회원 ID 도 보내야한다 .
+                    startActivity(loginIntent);
+                } else {//비회원
+                    String name = getIntent().getStringExtra("name");
+                    String gender = getIntent().getStringExtra("gender");
+                    String graduation = getIntent().getStringExtra("graduation");
+                    int age = getIntent().getIntExtra("age", 0);
+                    loginIntent.putExtra("name", name);
+                    loginIntent.putExtra("gender", gender);
+                    loginIntent.putExtra("graduation", graduation);
+                    loginIntent.putExtra("age", age);
+                    loginIntent.putExtra("member", member);
+                    loginIntent.putExtra("score", score);
+                    startActivity(loginIntent);
+                }
+            }
+        });
+    }
+}
+/*
         if (Build.VERSION.SDK_INT >= 23) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO,Manifest.permission.INTERNET,Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
         }
 
         am = getResources().getAssets();
+        mainam = getResources().getAssets();
         String num = null;
 
         StringTokenizer tokens;
@@ -206,7 +240,14 @@ public class TestActivity extends AppCompatActivity {
                 }
             }
         });
+        try {
+            MainImage = mainam.open("android.png");//메인 이미지
+            mainbm= BitmapFactory.decodeStream(MainImage);
+            exampleImageView.setImageBitmap(mainbm);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         exampleTextView.setText(problems.get(problemsnum).num+"."+problems.get(problemsnum).example);//첫번째 문제의 문제 출력
 
@@ -217,6 +258,7 @@ public class TestActivity extends AppCompatActivity {
                 try {
 
                     if (problemsnum < problems.size()-1) {
+                        exampleImageView.setImageBitmap(mainbm);
                         String strnum = problems.get(problemsnum).num;
                         int num1 = Integer.parseInt(strnum);
                         Log.d("TAG", "problemsnum: "+problemsnum);
@@ -284,6 +326,7 @@ public class TestActivity extends AppCompatActivity {
                                 break;
                             case 6:
                             case 7:
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 if(!answerEditText.getText().toString().equals("")&&(answerEditText.getText().toString().equals(state))||(answerEditText.getText().toString().equals(city))||(answerEditText.getText().toString().equals(town)))
                                     score += 1; //1번문제를 맞췄을시
                                 problemsnum++;
@@ -299,31 +342,34 @@ public class TestActivity extends AppCompatActivity {
                                     score += 1; //1번문제를 맞췄을시
                                 problemsnum++;
                                 answerEditText.setText("");
-
-                                /////////////////////////////////////////////////////
-
-
                                 //////다음문제 출력
-
-                                exampleButton.setEnabled(false);
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                exampleButton.setEnabled(false);//버튼 비활성화
+                                answerEditText.setEnabled(false);//답안 적는 필드 비활성화
+
                                 str = problems.get(problemsnum).example;
                                 str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
-
                                 new Handler().postDelayed(new Runnable() {//tts출력후 음성인식 시작
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getApplicationContext(), "음석인식이 활성화되었습니다. 말을 한 후에  확인버튼을 누르세요. ", Toast.LENGTH_SHORT).show();
-                                        SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
-                                        speechRecognizer.setRecognitionListener(listener);
-                                        speechRecognizer.startListening(intent);
-                                        exampleButton.setEnabled(true);//버튼활성화
+                                        while(tts.isSpeaking())
+                                            ;
+                                        if(tts.isSpeaking()==false){
+                                            Toast.makeText(getApplicationContext(), "음석인식이 활성화되었습니다. 말을 한 후에  확인버튼을 누르세요. ", Toast.LENGTH_SHORT).show();
+                                            SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+                                            speechRecognizer.setRecognitionListener(listener);
+                                            speechRecognizer.startListening(intent);
+                                            exampleButton.setEnabled(true);
+                                        }
                                     }
-                                },18500);
+                                },100);
+
 
                                 break;
                             case 9:
+                                Log.d("TAG", "speak: "+speak);
+                                answerEditText.setEnabled(true);
                                 String answer = problems.get(problemsnum).answer;
                                 StringTokenizer tokens = new StringTokenizer(answer,",");
                                 buffer = new String[tokens.countTokens()];
@@ -380,7 +426,7 @@ public class TestActivity extends AppCompatActivity {
                                     score += 1;
                                 problemsnum++;
                                 is = am.open(problems.get(problemsnum).url+".png");
-                                Bitmap bm= BitmapFactory.decodeStream(is);
+                                bm= BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
 
                                 answerEditText.setText("");
@@ -400,6 +446,7 @@ public class TestActivity extends AppCompatActivity {
                                 bm= BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
 
+
                                 answerEditText.setText("");
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
@@ -409,24 +456,32 @@ public class TestActivity extends AppCompatActivity {
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score+=1;
-
                                 problemsnum++;
                                 exampleButton.setEnabled(false);
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
+                                answerEditText.setEnabled(false);
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 new Handler().postDelayed(new Runnable() {//tts출력후 음성인식 시작
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getApplicationContext(), "음석인식이 활성화되었습니다. 말을 한 후에  확인버튼을 누르세요. ", Toast.LENGTH_SHORT).show();
-                                        SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
-                                        speechRecognizer.setRecognitionListener(listener);
-                                        speechRecognizer.startListening(intent);
-                                        exampleButton.setEnabled(true);
+                                        while(tts.isSpeaking())
+                                            ;
+                                        if(tts.isSpeaking()==false){
+                                            Toast.makeText(getApplicationContext(), "음석인식이 활성화되었습니다. 말을 한 후에  확인버튼을 누르세요. ", Toast.LENGTH_SHORT).show();
+                                            SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+                                            speechRecognizer.setRecognitionListener(listener);
+                                            speechRecognizer.startListening(intent);
+                                            exampleButton.setEnabled(true);
+                                        }
                                     }
-                                },18500);
+                                },100);
+
+                                break;
                             case 18:
+                                Log.d("TAG", "speak: "+speak);
+                                answerEditText.setEnabled(true);
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(speak)))
                                     score+=1;
@@ -434,8 +489,32 @@ public class TestActivity extends AppCompatActivity {
 
                         }
                     } else {
+
                         Intent loginIntent = new Intent(TestActivity.this, ResultActivity.class);
-                        startActivity(loginIntent);
+                        boolean member = getIntent().getBooleanExtra("member",true);
+                        if(member){//회원
+                            loginIntent.putExtra("member",member);
+                            loginIntent.putExtra("score",score);
+                            //나중에 회원 ID 도 보내야한다 .
+                            startActivity(loginIntent);
+                        }else{//비회원
+                            String name = getIntent().getStringExtra("name");
+                            String gender = getIntent().getStringExtra("gender");
+                            String graduation = getIntent().getStringExtra("graduation");
+                            int age = getIntent().getIntExtra("age",0);
+                            loginIntent.putExtra("name",name);
+                            loginIntent.putExtra("gender",gender);
+                            loginIntent.putExtra("graduation",graduation);
+                            loginIntent.putExtra("age",age);
+                            loginIntent.putExtra("member",member);
+                            loginIntent.putExtra("score",score);
+                            startActivity(loginIntent);
+                        }
+                        am.close();
+                        mainam.close();
+
+                        //if 문을 걸어서 intent 이 member 를 false 비회원  이필요한거 다보낸다
+
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -612,4 +691,4 @@ public class TestActivity extends AppCompatActivity {
         }
 
     }
-}
+}*/
