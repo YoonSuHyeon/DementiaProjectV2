@@ -32,10 +32,13 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <LinearLayout
+
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -44,10 +47,8 @@
                     android:id="@+id/nonloginNameEditText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="66dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/editform"
 
                     android:hint="이름을 입력하세요"
@@ -62,6 +63,7 @@
                 android:orientation="horizontal"/>
 
             <LinearLayout
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -72,9 +74,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="66dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/editform"
-
                     android:hint="생년월일"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
@@ -86,6 +87,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/btn_register"
                     android:text="날짜 선택"
                     android:textStyle="bold"
