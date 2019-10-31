@@ -57,20 +57,52 @@ public class TestActivity extends AppCompatActivity {
 
     int problemsnum = 0;
     int year, month, day, week, score = 0;
-    String state = null, city=null, town=null;  //state: 도, 특별시, 광역시  city: 시 군  town: 면/동/읍
+    String state = null, city = null, town = null;  //state: 도, 특별시, 광역시  city: 시 군  town: 면/동/읍
     String season = null, days = null, speak = null;
     String[] buffer, buffer1;
     AssetManager am, mainam;
-    InputStream is = null,MainImage=null;
-    Double latitude=0.0,longitude=0.0;
+    InputStream is = null, MainImage = null;
+    Double latitude = 0.0, longitude = 0.0;
     Bitmap bm, mainbm;
     final int PERMISSION = 1;
-
+    String uid;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        exampleButton=findViewById(R.id.exampleButton);
 
 
+
+        exampleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(TestActivity.this, ResultActivity.class);
+                boolean member = getIntent().getBooleanExtra("member", true);
+                if (member) {//회원
+                    String uid = getIntent().getStringExtra("uid");
+                    loginIntent.putExtra("member", member);
+                    loginIntent.putExtra("score", score);
+                    loginIntent.putExtra("uid", uid);
+                    //나중에 회원 ID 도 보내야한다 .
+                    startActivity(loginIntent);
+                } else {//비회원
+                    String name = getIntent().getStringExtra("name");
+                    String gender = getIntent().getStringExtra("gender");
+                    String graduation = getIntent().getStringExtra("graduation");
+                    int age = getIntent().getIntExtra("age", 0);
+                    loginIntent.putExtra("name", name);
+                    loginIntent.putExtra("gender", gender);
+                    loginIntent.putExtra("graduation", graduation);
+                    loginIntent.putExtra("age", age);
+                    loginIntent.putExtra("member", member);
+                    loginIntent.putExtra("score", score);
+                    startActivity(loginIntent);
+                }
+            }
+        });
+    }
+}
+/*
         if (Build.VERSION.SDK_INT >= 23) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO,Manifest.permission.INTERNET,Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
         }
@@ -154,16 +186,8 @@ public class TestActivity extends AppCompatActivity {
                 break;
         }
 
-        boolean member = getIntent().getBooleanExtra("member",true);
-        String name = getIntent().getStringExtra("name");
-        String gender = getIntent().getStringExtra("gender");
-        String graduation = getIntent().getStringExtra("graduation");
-        int age = getIntent().getIntExtra("age",0);
-        Log.d("TAG", "name: "+name);
-        Log.d("TAG", "gender: "+gender);
-        Log.d("TAG", "graduation: "+graduation);
-        Log.d("TAG", "age: "+age);
-        Log.d("TAG", "member: "+member);
+
+
         try {
             is = am.open("test.txt");
 
@@ -456,12 +480,11 @@ public class TestActivity extends AppCompatActivity {
 
                                 break;
                             case 18:
-                                if(!answerEditText.getText().toString().equals("")&&
-                                        (speak.equals(problems.get(problemsnum).answer)))
-                                    score+=1;
-                                answerEditText.setText("");
                                 Log.d("TAG", "speak: "+speak);
-                                //answerEditText.setEnabled(true);
+                                answerEditText.setEnabled(true);
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().equals(speak)))
+                                    score+=1;
                                 problemsnum++;
 
                         }
@@ -472,31 +495,23 @@ public class TestActivity extends AppCompatActivity {
                         if(member){//회원
                             loginIntent.putExtra("member",member);
                             loginIntent.putExtra("score",score);
-                            Log.d("TAG", "member: "+member);
-                            Log.d("TAG", "score: "+score);
+                            //나중에 회원 ID 도 보내야한다 .
                             startActivity(loginIntent);
                         }else{//비회원
                             String name = getIntent().getStringExtra("name");
                             String gender = getIntent().getStringExtra("gender");
                             String graduation = getIntent().getStringExtra("graduation");
                             int age = getIntent().getIntExtra("age",0);
-
                             loginIntent.putExtra("name",name);
                             loginIntent.putExtra("gender",gender);
                             loginIntent.putExtra("graduation",graduation);
                             loginIntent.putExtra("age",age);
                             loginIntent.putExtra("member",member);
                             loginIntent.putExtra("score",score);
-
-                            Log.d("TAG", "name: "+name);
-                            Log.d("TAG", "gender: "+gender);
-                            Log.d("TAG", "graduation: "+graduation);
-                            Log.d("TAG", "age: "+age);
-                            Log.d("TAG", "member: "+member);
-                            Log.d("TAG", "score: "+score);
                             startActivity(loginIntent);
                         }
-
+                        am.close();
+                        mainam.close();
 
                         //if 문을 걸어서 intent 이 member 를 false 비회원  이필요한거 다보낸다
 
@@ -592,7 +607,6 @@ public class TestActivity extends AppCompatActivity {
             ArrayList<String> list = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);//사용자가 말한 데이터를 ArrayList에 저장
             speak = list.get(0);//사용자의 말을 음성인식한 데이터를 String 형 speak변수에 저장
             speak = speak.replaceAll(" ","");// 사용자가 말한 문자열이 띄어쓰기가 있으면 공백 제거
-            list.clear();
         }
 
         @Override
@@ -677,4 +691,4 @@ public class TestActivity extends AppCompatActivity {
         }
 
     }
-}
+}*/

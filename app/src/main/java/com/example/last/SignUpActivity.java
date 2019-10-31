@@ -25,7 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import static com.example.last.R.id.graduationSpinner;
@@ -160,8 +162,22 @@ private void create_mem()
                                   }
                               }
                               if (checknum == 0) {
+                                  String agetext;
+                                  agetext =age.getText().toString();
+                                  StringTokenizer tokens; // age가 생년월일로 되어있기 때문에 입력한 년도를 토큰으로 가져와 나이를 구한다.
+                                  tokens = new StringTokenizer(agetext,".");
+                                  agetext = tokens.nextToken();
 
-                                  Users user = new Users(age.getText().toString(), id.getText().toString(), password.getText().toString(), email.getText().toString(), gendered, spinner.getSelectedItem().toString(),
+                                  int year; //현재 년도
+                                  Calendar calendar = new GregorianCalendar(Locale.KOREA);
+                                  year = calendar.get(Calendar.YEAR);
+
+                                  int myage; //실제 나이
+                                  myage = year-Integer.parseInt(agetext)+1; //나이를 구하기 위해서 현재 년을 구해서 차이를 구한후 1을 더한다.
+
+
+
+                                  Users user = new Users(myage, id.getText().toString(), password.getText().toString(), email.getText().toString(), gendered, spinner.getSelectedItem().toString(),
                                           authority, "0", "101010", name.getText().toString(), false);
 
 
@@ -177,9 +193,7 @@ private void create_mem()
 
                 }
 
-            }
-
-            ;
+            };
                                 table_user.addListenerForSingleValueEvent(vListener);
 
 
