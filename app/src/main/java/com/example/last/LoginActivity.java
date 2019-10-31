@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (checkId.equals(dbId)&&checkpassword.equals(dbpassword)) {
                             dbparent=da.getKey();
-                            Log.d("TAG", "dbparent "+dbparent);
                             dbagreement=da.child("agreement").getValue(boolean.class);
                             checklogin=1;
                             break;
@@ -107,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else{
                         Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                        loginIntent.putExtra("uid",dbparent); // 유저의 UID를 인텐트로 보내기 위함
                         startActivity(loginIntent);
                     }
 
