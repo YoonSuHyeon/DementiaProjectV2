@@ -26,16 +26,18 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                 />
+                />
             //android:src="@drawable/ic_assignment_ind_black_24dp"
 
             <TextView
+                app:fontFamily="sans-serif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="Test"
-                android:textColor="#ffffffff"
-                android:textSize="30dp" />
+                android:text="진단하기"
+                android:textStyle="bold"
+                android:textColor="#0C0A0A"
+                android:textSize="40dp" />
 
         </LinearLayout>
 
@@ -52,92 +54,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-//android:src="@drawable/ic_color_lens_black_24dp"
+            //android:src="@drawable/ic_color_lens_black_24dp"
             <TextView
+                app:fontFamily="sans-serif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="35dp"
-                android:text="Paint"
-                android:textColor="#ffffffff"
-                android:textSize="30dp" />
+                android:text="문제 풀기"
+                android:textStyle="bold"
+                android:textColor="#141212"
+                android:textSize="40dp" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/li_calender"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#6B0427"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                 />
-            //android:src="@drawable/ic_event_available_black_24dp"
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Calender"
-                android:textColor="#ffffffff"
-                android:textSize="30dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/li_memo"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#34156B"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 />
-            //android:src="@drawable/ic_library_books_black_24dp"
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Memo"
-                android:textColor="#ffffffff"
-                android:textSize="30dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/li_freeboard"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#695C88"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                 />
-            //android:src="@drawable/ic_toc_black_24dp"
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Free Board"
-                android:textColor="#ffffffff"
-                android:textSize="30dp" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/li_settings"
@@ -160,8 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text="Settings"
-                android:textColor="#ffffffff"
-                android:textSize="30dp" />
+                android:textStyle="bold"
+                android:textColor="#0F0E0E"
+                android:textSize="40dp"
+                app:fontFamily="sans-serif"/>
 
         </LinearLayout>
     </LinearLayout>

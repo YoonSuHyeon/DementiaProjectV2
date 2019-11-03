@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,23 +24,18 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="아이디 비밀번호 찾기"
-                android:textColor="#050505"
+                android:text="아이디 / 비밀번호 찾기"
+                android:textColor="#3D3D3F"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -49,13 +44,13 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:inputType="text"
                     android:id="@+id/findIdNameEditText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="end"
                     android:layout_marginLeft="66dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
                     android:background="@drawable/editform"
 
                     android:hint="이름을 입력하세요"
@@ -75,21 +70,24 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/findIdEmailEditText"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="end"
                     android:layout_marginLeft="66dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/editform"
-
                     android:hint="이메일"
+
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
                     android:textColorHint="#ffffffff" />
 
 
                 <Button
+                    android:layout_gravity="end"
                     android:id="@+id/findIdEmailButton"
                     android:layout_width="125dp"
                     android:layout_height="45dp"
@@ -103,69 +101,55 @@
 
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/findIdCertifyEditText"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="66dp"
-                android:background="@drawable/editform"
-
-                android:hint="인증코드"
-                android:padding="10dp"
-                android:textColor="#ffffffff"
-                android:textColorHint="#ffffffff" />
-
-
-            <Button
-                android:id="@+id/findIdCertifyButton"
-                android:layout_width="125dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/btn_register"
-                android:text="인증"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:textColor="#ffffffff"/>
-
-
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/findIdCertifyEditText"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="66dp"
+                    android:background="@drawable/editform"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-    </LinearLayout>
+                    android:hint="인증코드"
+                    android:padding="10dp"
+                    android:textColor="#ffffffff"
+                    android:textColorHint="#ffffffff" />
+
+
+                <Button
+                    android:id="@+id/findIdCertifyButton"
+                    android:layout_gravity="end"
+                    android:layout_width="125dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_register"
+                    android:text="인증"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="#ffffffff"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
