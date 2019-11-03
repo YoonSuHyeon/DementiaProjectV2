@@ -66,8 +66,8 @@
                 android:textStyle="bold"
                 android:textColor="#141212"
                 android:textSize="40dp"
-                android:drawableStart="@drawable/ic_vpn_key_black_24dp"
-                android:drawableLeft="@drawable/ic_vpn_key_black_24dp"/>
+                android:drawableStart="@drawable/ic_edit_black_24dp"
+                android:drawableLeft="@drawable/ic_edit_black_24dp"/>
 
         </LinearLayout>
 
@@ -97,8 +97,8 @@
                 android:textColor="#0F0E0E"
                 android:textSize="40dp"
                 app:fontFamily="sans-serif"
-                android:drawableStart="@drawable/ic_build_black_24dp"
-                android:drawableLeft="@drawable/ic_build_black_24dp"/>
+                android:drawableStart="@drawable/ic_settings_black_24dp"
+                android:drawableLeft="@drawable/ic_settings_black_24dp"/>
 
         </LinearLayout>
     </LinearLayout>
