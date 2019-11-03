@@ -21,6 +21,7 @@
             android:text="이용약관동의"
             android:textStyle="bold"
             android:textSize="15dp"
+            android:buttonTint="@color/teal_500"
             app:fontFamily="serif"
             >
 
@@ -30,7 +31,7 @@
 
             android:background="@drawable/background"
             android:textStyle="bold"
-            app:fontFamily="serif"
+            app:fontFamily="sans-serif"
             android:id="@+id/agree_ok1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
             android:text="개인정보취급약관 동의"
             app:fontFamily="serif"
             android:textStyle="bold"
+            android:buttonTint="@color/teal_500"
             android:textSize="15dp">
 
         </androidx.appcompat.widget.AppCompatCheckBox>
@@ -68,7 +70,7 @@
 
         <Button
             android:background="@drawable/background"
-            app:fontFamily="serif"
+            app:fontFamily="sans-serif"
             android:id="@+id/agree_ok2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,6 +107,7 @@
             android:text="모두 동의"
             android:textSize="15dp"
             app:fontFamily="serif"
+            android:buttonTint="@color/teal_500"
             android:textStyle="bold"/>
     </RelativeLayout>
 
@@ -114,7 +117,7 @@
 
         <Button
 
-            app:fontFamily="serif"
+            app:fontFamily="sans-serif"
             android:textStyle="bold"
             android:id="@+id/btn_next"
             android:background="@drawable/background"

@@ -42,15 +42,14 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:inputType="text"
                     android:id="@+id/nameText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/editform"
-
                     android:hint="이름을 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
@@ -66,6 +65,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:inputType="text"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:id="@+id/idText"
@@ -93,25 +93,25 @@
                      android:layout_height="wrap_content"
                      android:layout_gravity="center"
                      android:layout_marginTop="5dp"
-
                      android:background="@drawable/editform"
-
-                    android:hint="비밀번호를 입력하세요"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
-                    android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                     android:singleLine="true"
+                     android:hint="비밀번호를 입력하세요"
+                     android:inputType="textPassword"
+                     android:padding="10dp"
+                     android:textColor="#ffffffff"
+                     android:textColorHint="#ffffffff" />
                     //android:drawableStart="@drawable/ic_lock_outline_black_24dp"
                     android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
 
                 <EditText
+
                     android:id="@+id/passwordText2"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/editform"
-
+                    android:singleLine="true"
                     android:hint="비밀번호를 다시 입력하세요"
                     android:inputType="textPassword"
                     android:padding="10dp"
@@ -120,13 +120,14 @@
                 // android:drawableStart="@drawable/ic_lock_outline_black_24dp"
                 //android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/emailText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/editform"
-
+                    android:inputType="textEmailAddress"
                     android:hint="이메일을 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
@@ -155,7 +156,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="3dp"
                     android:background="@drawable/editform"
-
+                    android:enabled="false"
                     android:hint="생년월일"
                     android:padding="10dp"
                     android:textColor="#ffffffff"

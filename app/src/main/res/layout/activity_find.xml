@@ -64,6 +64,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:inputType="text"
                     android:id="@+id/findIdNameEditText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
@@ -94,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="5dp"
-
+                    android:inputType="text"
                     android:layout_marginLeft="66dp"
                     android:background="@drawable/editform"
 
@@ -130,6 +131,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:inputType="text"
                 android:id="@+id/findIdCertifyEditText"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -207,6 +209,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:inputType="text"
                 android:id="@+id/findPasswordNameEditText"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -233,6 +236,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:inputType="text"
                 android:id="@+id/findPasswordHpEditText"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

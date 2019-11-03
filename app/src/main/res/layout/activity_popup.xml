@@ -34,7 +34,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
                 android:textColor="@color/teal_500"
                 android:textStyle="bold"
-                app:fontFamily="serif" />
+                app:fontFamily="sans-serif" />
 
         </LinearLayout>
 
@@ -66,7 +66,7 @@
                 android:text="@string/txt_popup"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/grey_60"
-                app:fontFamily="serif" />
+                app:fontFamily="sans-serif" />
 
         </LinearLayout>
 
@@ -98,6 +98,6 @@
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textColor="#0A0A0A"
-            app:fontFamily="serif" />
+            app:fontFamily="sans-serif" />
     </LinearLayout>
 </LinearLayout>

@@ -44,6 +44,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:inputType="text"
                     android:id="@+id/nonloginNameEditText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
@@ -69,6 +70,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:enabled="false"
                     android:id="@+id/nonloginAgeEditText"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
