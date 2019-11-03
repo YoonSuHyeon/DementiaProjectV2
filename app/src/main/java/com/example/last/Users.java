@@ -1,7 +1,7 @@
 package com.example.last;
 
 public class Users {
-    private String age;
+    private int age;
     private String id;
     private String password;
     private String email;
@@ -13,11 +13,11 @@ public class Users {
     private String name;
     private boolean agreement;
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -102,7 +102,7 @@ public class Users {
     }
 
      //나이,아이디,패스워드,이메일,성,졸업,권한,레벨,핸드폰,이름,동의
-    public Users(String age, String id, String password, String email, String sex, String graduation, String authority, String level, String hp, String name, boolean agreement) {
+    public Users(int age, String id, String password, String email, String sex, String graduation, String authority, String level, String hp, String name, boolean agreement) {
         this.age = age;
         this.id = id;
         this.password = password;

@@ -133,7 +133,8 @@ public class CustomDialog {
                         database= FirebaseDatabase.getInstance().getReference();
                         database.child("Users").child(dbparent).child("agreement").setValue(true);
                         //fire 접근후 agreement true로 변경
-                        Intent intent = new Intent(dlg.getContext(),HomeActivity.class);
+                        Intent intent = new Intent(dlg.getContext(),HomeActivity.class); // HomeActivity 를 가기위해서  인텐스 생성
+                        intent.putExtra("uid",dbparent); //uid 인텐트에 추가
                         dlg.getContext().startActivity(intent);
                         dlg.dismiss();
                     }
