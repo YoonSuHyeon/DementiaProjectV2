@@ -53,9 +53,10 @@
                     android:hint="이름을 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
-                //android:drawableStart="@drawable/ic_folder_shared_black_24dp"
-                //android:drawableLeft="@drawable/ic_folder_shared_black_24dp"
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"/>
+
 
             </LinearLayout>
             <LinearLayout
@@ -77,9 +78,10 @@
                     android:hint="아이디를 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
-                //android:drawableStart="@drawable/ic_person_black_24dp"
-                //android:drawableLeft="@drawable/ic_person_black_24dp"
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"/>
+
 
             </LinearLayout>
             <LinearLayout
@@ -99,9 +101,10 @@
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
-                //android:drawableStart="@drawable/ic_lock_outline_black_24dp"
-                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                    android:drawableLeft="@drawable/ic_lock_outline_black_24dp"/>
+
 
                 <EditText
 
@@ -116,9 +119,10 @@
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
-                // android:drawableStart="@drawable/ic_lock_outline_black_24dp"
-                //android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                    android:drawableLeft="@drawable/ic_lock_outline_black_24dp"/>
+
                 <EditText
                     android:singleLine="true"
                     android:id="@+id/emailText"
@@ -131,9 +135,10 @@
                     android:hint="이메일을 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
-                //android:drawableStart="@drawable/ic_mail_outline_black_24dp"
-                //android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_mail_outline_black_24dp"
+                    android:drawableLeft="@drawable/ic_mail_outline_black_24dp"/>
+
 
 
 
@@ -160,7 +165,10 @@
                     android:hint="생년월일"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_today_black_24dp"
+                    android:drawableLeft="@drawable/ic_today_black_24dp"
+                    />
 
                 <Button
                     android:id="@+id/picker_ymd"

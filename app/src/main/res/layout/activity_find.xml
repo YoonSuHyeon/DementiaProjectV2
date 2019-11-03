@@ -56,7 +56,9 @@
                     android:hint="이름을 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"/>
 
             </LinearLayout>
             <LinearLayout
@@ -83,7 +85,9 @@
                     android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_mail_outline_black_24dp"
+                    android:drawableLeft="@drawable/ic_mail_outline_black_24dp"/>
 
 
                 <Button
@@ -124,7 +128,9 @@
                     android:hint="인증코드"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                    android:drawableLeft="@drawable/ic_lock_outline_black_24dp"/>
 
 
                 <Button

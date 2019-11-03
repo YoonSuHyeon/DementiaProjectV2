@@ -55,7 +55,9 @@
                     android:hint="이름을 입력하세요"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"/>
 
             </LinearLayout>
             <LinearLayout
@@ -81,7 +83,9 @@
                     android:hint="생년월일"
                     android:padding="10dp"
                     android:textColor="#ffffffff"
-                    android:textColorHint="#ffffffff" />
+                    android:textColorHint="#ffffffff"
+                    android:drawableStart="@drawable/ic_today_black_24dp"
+                    android:drawableLeft="@drawable/ic_today_black_24dp"/>
 
                 <Button
                     android:id="@+id/nonlogin_picker_ymd"

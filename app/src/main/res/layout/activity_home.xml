@@ -37,7 +37,9 @@
                 android:text="진단하기"
                 android:textStyle="bold"
                 android:textColor="#0C0A0A"
-                android:textSize="40dp" />
+                android:textSize="40dp"
+                android:drawableStart="@drawable/ic_search_black_24dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"/>
 
         </LinearLayout>
 
@@ -63,7 +65,9 @@
                 android:text="문제 풀기"
                 android:textStyle="bold"
                 android:textColor="#141212"
-                android:textSize="40dp" />
+                android:textSize="40dp"
+                android:drawableStart="@drawable/ic_vpn_key_black_24dp"
+                android:drawableLeft="@drawable/ic_vpn_key_black_24dp"/>
 
         </LinearLayout>
 
@@ -92,7 +96,9 @@
                 android:textStyle="bold"
                 android:textColor="#0F0E0E"
                 android:textSize="40dp"
-                app:fontFamily="sans-serif"/>
+                app:fontFamily="sans-serif"
+                android:drawableStart="@drawable/ic_build_black_24dp"
+                android:drawableLeft="@drawable/ic_build_black_24dp"/>
 
         </LinearLayout>
     </LinearLayout>
