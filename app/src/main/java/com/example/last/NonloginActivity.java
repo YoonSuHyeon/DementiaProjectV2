@@ -44,7 +44,7 @@ public class NonloginActivity extends AppCompatActivity {
 
         nonlogin_genderMan=findViewById(R.id.nonlogin_genderMan);
         nonlogin_genderWoman=findViewById(R.id.nonlogin_genderWoman);
-
+        nonloginAgeEditText.setEnabled(false);
         nonlogin_picker_ymd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //생년월일  picker
@@ -56,6 +56,7 @@ public class NonloginActivity extends AppCompatActivity {
                             Date d = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(year+"-"+(month+1)+"-"+dayOfMonth);
                             int m=month+1;
                             nonloginAgeEditText.setText(year + "." +m +"." + dayOfMonth);
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }}

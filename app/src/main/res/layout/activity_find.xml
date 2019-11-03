@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +27,8 @@
                 android:text="아이디 비밀번호 찾기"
                 android:textColor="#050505"
                 android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
         </LinearLayout>
 
@@ -38,6 +39,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -49,9 +51,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="아이디 찾기"
-                android:textColor="#050505"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textColor="#131010"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:fontFamily="serif"/>
         </LinearLayout>
 
 
@@ -64,10 +67,9 @@
                     android:id="@+id/findIdNameEditText"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="end"
                     android:layout_marginLeft="66dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
                     android:background="@drawable/editform"
 
                     android:hint="이름을 입력하세요"
@@ -90,8 +92,9 @@
                     android:id="@+id/findIdHpEditText"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="end"
                     android:layout_marginTop="5dp"
+
                     android:layout_marginLeft="66dp"
                     android:background="@drawable/editform"
 
@@ -102,6 +105,7 @@
 
 
                 <Button
+                    android:layout_gravity="end"
                     android:id="@+id/findIdHpButton"
                     android:layout_width="125dp"
                     android:layout_height="45dp"
@@ -129,7 +133,7 @@
                 android:id="@+id/findIdCertifyEditText"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="66dp"
                 android:background="@drawable/editform"
@@ -142,6 +146,7 @@
 
             <Button
                 android:id="@+id/findIdCertifyButton"
+                android:layout_gravity="end"
                 android:layout_width="125dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="8dp"
@@ -163,10 +168,10 @@
                 android:id="@+id/findIdButton"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
                 android:layout_marginLeft="66dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
+
                 android:background="@drawable/btn_register"
                 android:text="아이디 찾기"
 
@@ -177,6 +182,7 @@
             </LinearLayout>
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -188,9 +194,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="비밀번호 찾기"
-                android:textColor="#050505"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textColor="#292221"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:fontFamily="serif"/>
         </LinearLayout>
 
 
@@ -206,7 +213,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="66dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/editform"
 
                 android:hint="이름을 입력하세요"
@@ -266,7 +273,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="66dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/btn_register"
                 android:text="비밀번호 찾기"
 
