@@ -59,7 +59,7 @@
             android:text="가까운 병원 찾기"
             android:textStyle="bold"
             android:textSize="50dp"
-            android:background="@drawable/loginbutton"/>
+            android:background="@drawable/square_button"/>
 
 
 
