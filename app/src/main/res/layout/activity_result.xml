@@ -21,11 +21,12 @@
             android:enabled="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="진단 결과"
+            android:text="Test Result"
+            android:textStyle="bold"
             app:fontFamily ="sans-serif-light"
             android:textColor="#0E0C0C"
             android:layout_gravity="center"
-            android:textSize="70dp"/>
+            android:textSize="90dp"/>
 
     </LinearLayout>
 
