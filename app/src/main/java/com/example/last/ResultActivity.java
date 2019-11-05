@@ -41,12 +41,12 @@ public class ResultActivity extends AppCompatActivity {
         database= FirebaseDatabase.getInstance().getReference(); //파이어 베이스 초기화
 
         textView = (TextView)findViewById(R.id.textView);
-        //점수를 받는다.
+
          intent = getIntent(); //intent를 받는다.
         boolean member = getIntent().getBooleanExtra("member",true);
         if(member){ //회원이면 하는일
             score = intent.getIntExtra("score",0);
-            score=24;
+
 
             //score= score+4; // 시행점수 +4 (시간지남력(1), 주의집중력(2), 언어기능(1))
 

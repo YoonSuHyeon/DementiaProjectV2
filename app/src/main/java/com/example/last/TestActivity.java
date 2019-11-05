@@ -65,7 +65,7 @@ public class TestActivity extends AppCompatActivity {
     Double latitude = 0.0, longitude = 0.0;
     Bitmap bm, mainbm;
     final int PERMISSION = 1;
-    String uid;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
@@ -83,7 +83,7 @@ public class TestActivity extends AppCompatActivity {
                     loginIntent.putExtra("member", member);
                     loginIntent.putExtra("score", score);
                     loginIntent.putExtra("uid", uid);
-                    //나중에 회원 ID 도 보내야한다 .
+
                     startActivity(loginIntent);
                 } else {//비회원
                     String name = getIntent().getStringExtra("name");
