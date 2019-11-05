@@ -14,8 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TrainingTestActivity"></activity>
-        <activity android:name=".TrainingResultActivity" />
+        <activity android:name=".TrainingTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".TrainingResultActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".FindActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
