@@ -15,7 +15,7 @@ public class TrainingResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_result);
-        trainingTextView=findViewById(R.id.trainingTextView);
+        trainingTextView=findViewById(R.id.score);
 
 
         intent = getIntent();

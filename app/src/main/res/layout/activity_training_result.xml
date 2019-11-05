@@ -26,10 +26,14 @@
             app:fontFamily ="sans-serif-light"
             android:textColor="#0E0C0C"
             android:layout_gravity="center"
-            android:textSize="90dp"/>
+            android:textSize="50dp"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#B7B7EC"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,7 +47,7 @@
             android:layout_height="match_parent"
             android:text="70점"
             android:textColor="#F75506"
-            android:textSize="120dp"
+            android:textSize="35dp"
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
