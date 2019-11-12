@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +32,12 @@ public class ResultActivity extends AppCompatActivity {
             {16,20,24,26}  //80>=세 여자 0-3년,4-6년,7-12년,>13년
     };
     String result,gender,graduation,name; //결과
-    String uid;
+    String uid, state, city;
     Intent intent;
     private DatabaseReference database;
     TextView textView;
+    Button findhos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +45,19 @@ public class ResultActivity extends AppCompatActivity {
         database= FirebaseDatabase.getInstance().getReference(); //파이어 베이스 초기화
 
         textView = (TextView)findViewById(R.id.textView);
-
-         intent = getIntent(); //intent를 받는다.
+        findhos = findViewById(R.id.findhosbutton);
+        intent = getIntent(); //intent를 받는다.
+        state = intent.getStringExtra("state");
+        city = intent.getStringExtra("city");
         boolean member = getIntent().getBooleanExtra("member",true);
+
+        Log.d("TAG","statre:"+state);
+        Log.d("TAG","city:"+city);
         if(member){ //회원이면 하는일
             score = intent.getIntExtra("score",0);
 
 
-            //score= score+4; // 시행점수 +4 (시간지남력(1), 주의집중력(2), 언어기능(1))
+            score= score+4; // 시행점수 +4 (시간지남력(1), 주의집중력(2), 언어기능(1))
 
             uid = intent.getStringExtra("uid");
 
@@ -92,7 +101,7 @@ public class ResultActivity extends AppCompatActivity {
             gender=intent.getStringExtra("gender");
             graduation=intent.getStringExtra("graduation");
             name = intent.getStringExtra("name");
-
+            score= score+4; // 시행점수 +4 (시간지남력(1), 주의집중력(2), 언어기능(1))
             textView.setText("Score: "+ score);
             textView.append("age: "+ age);
             textView.append("graduation: "+ graduation);
@@ -102,14 +111,23 @@ public class ResultActivity extends AppCompatActivity {
 
             textView.setText(result);
         }
-
+        findhos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(ResultActivity.this,MapActivity.class);
+                intent1.putExtra("state",state);
+                intent1.putExtra("city",city);
+                startActivity(intent1);
+                finish();
+            }
+        });
     }
 
 
 
 
     public String checkup(){ //평가하는 함수
-       /* int[][] testscores={
+      /* int[][] testscores={
                 {20,24,25,26}, //60~69세 남자 0-3년,4-6년,7-12년,>13년
                 {19,23,25,26}, //60~69세 여자 0-3년,4-6년,7-12년,>13년
                 {20,23,25,26}, //70~74세 남자 0-3년,4-6년,7-12년,>13년

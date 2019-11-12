@@ -112,6 +112,7 @@ public class NonloginActivity extends AppCompatActivity {
                     intent.putExtra("age",myage);
                     intent.putExtra("member",false);
                     startActivity(intent);
+                    finish();
                 }
 
             }

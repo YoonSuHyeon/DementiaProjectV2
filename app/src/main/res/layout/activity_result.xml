@@ -60,12 +60,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/findhosbutton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/square_button"
             android:text="가까운 병원 찾기"
-            android:textStyle="bold"
             android:textSize="50dp"
-            android:background="@drawable/square_button"/>
+            android:textStyle="bold" />
 
 
 

@@ -26,7 +26,10 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -64,7 +67,7 @@ public class TestActivity extends AppCompatActivity {
     InputStream is = null, MainImage = null;
     Double latitude = 0.0, longitude = 0.0;
     Bitmap bm, mainbm;
-    final int PERMISSION = 1;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,40 +75,6 @@ public class TestActivity extends AppCompatActivity {
         exampleButton=findViewById(R.id.exampleButton);
 
 
-
-        exampleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loginIntent = new Intent(TestActivity.this, ResultActivity.class);
-                boolean member = getIntent().getBooleanExtra("member", true);
-                if (member) {//회원
-                    String uid = getIntent().getStringExtra("uid");
-                    loginIntent.putExtra("member", member);
-                    loginIntent.putExtra("score", score);
-                    loginIntent.putExtra("uid", uid);
-
-                    startActivity(loginIntent);
-                } else {//비회원
-                    String name = getIntent().getStringExtra("name");
-                    String gender = getIntent().getStringExtra("gender");
-                    String graduation = getIntent().getStringExtra("graduation");
-                    int age = getIntent().getIntExtra("age", 0);
-                    loginIntent.putExtra("name", name);
-                    loginIntent.putExtra("gender", gender);
-                    loginIntent.putExtra("graduation", graduation);
-                    loginIntent.putExtra("age", age);
-                    loginIntent.putExtra("member", member);
-                    loginIntent.putExtra("score", score);
-                    startActivity(loginIntent);
-                }
-            }
-        });
-    }
-}
-/*
-        if (Build.VERSION.SDK_INT >= 23) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO,Manifest.permission.INTERNET,Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
-        }
 
         am = getResources().getAssets();
         mainam = getResources().getAssets();
@@ -124,10 +93,11 @@ public class TestActivity extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-kr");//인식할 언어 설정
 
 
-
-
         startLocationService();//내위치 경도 위도 값 추출하는 함수 호출
         String address = getAddress(latitude,longitude);//경도 위도값을 매개변수로 하여 주소를 가져옴
+
+        Log.d("TAG", "latitude: "+latitude);
+        Log.d("TAG", "longitude: "+longitude);
         tokens = new StringTokenizer(address," ");
         buffer1 = new String[tokens.countTokens()];
         int i = 0;
@@ -250,7 +220,7 @@ public class TestActivity extends AppCompatActivity {
         }
 
         exampleTextView.setText(problems.get(problemsnum).num+"."+problems.get(problemsnum).example);//첫번째 문제의 문제 출력
-
+        answerEditText.setHint("숫자만 적으세요.(년X , 연X)");
 
         exampleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,13 +228,15 @@ public class TestActivity extends AppCompatActivity {
                 try {
 
                     if (problemsnum < problems.size()-1) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);//키보드 강제 내리기
+                        imm.hideSoftInputFromWindow(answerEditText.getWindowToken(), 0);
                         exampleImageView.setImageBitmap(mainbm);
                         String strnum = problems.get(problemsnum).num;
                         int num1 = Integer.parseInt(strnum);
                         Log.d("TAG", "problemsnum: "+problemsnum);
                         Log.d("TAG", "problems.size(): "+problems.size());
                         Log.d("TAG", "텍스트 문제번호: "+num1);
-                        Log.d("TAG", "score1: "+score);
+                        Log.d("TAG", "답: "+problems.get(problemsnum).answer);
                         switch (num1) {
                             case 1:
                                 if (!answerEditText.getText().toString().equals("")&&Integer.parseInt(answerEditText.getText().toString())==year) {
@@ -272,11 +244,12 @@ public class TestActivity extends AppCompatActivity {
                                 }
                                 problemsnum++;
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
-
+                                Log.d("TAG", "score1: "+score);
 
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 String str = problems.get(problemsnum).example;
+                                answerEditText.setHint("계절을 입력하세요");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 2:
@@ -284,10 +257,11 @@ public class TestActivity extends AppCompatActivity {
                                     score+=1;
                                 problemsnum++;
                                 answerEditText.setText("");
-
+                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("숫자만 적으세요.(일X)");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 3:
@@ -295,10 +269,11 @@ public class TestActivity extends AppCompatActivity {
                                     score += 1; //1번문제를 맞췄을시
                                 answerEditText.setText("");
                                 problemsnum++;
-
+                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("?요일 - ?에 들어갈 단어를 입력하세요.(요일x)");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 4:
@@ -306,10 +281,11 @@ public class TestActivity extends AppCompatActivity {
                                     score += 1; //1번문제를 맞췄을시
                                 answerEditText.setText("");
                                 problemsnum++;
-
+                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("숫자만 적으세요.(월X)");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 5:
@@ -318,10 +294,11 @@ public class TestActivity extends AppCompatActivity {
 
                                 answerEditText.setText("");
                                 problemsnum++;
-
+                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("자신의 해당하는 위치의 도를 입력하세요,");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 6:
@@ -331,10 +308,14 @@ public class TestActivity extends AppCompatActivity {
                                     score += 1; //1번문제를 맞췄을시
                                 problemsnum++;
                                 answerEditText.setText("");
-
+                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                if(num1==6)
+                                    answerEditText.setHint("자신의 해당하는 위치의 시/군를 입력하세요,");
+                                else
+                                    answerEditText.setHint("자신의 해당하는 위치의 동/면/읍을 입력하세요,");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 8:
@@ -346,8 +327,9 @@ public class TestActivity extends AppCompatActivity {
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 exampleButton.setEnabled(false);//버튼 비활성화
                                 answerEditText.setEnabled(false);//답안 적는 필드 비활성화
-
+                                Log.d("TAG", "score1: "+score);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("단어를 듣고 기억한 후 말하는 문제입니다.");
                                 str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 new Handler().postDelayed(new Runnable() {//tts출력후 음성인식 시작
@@ -386,11 +368,12 @@ public class TestActivity extends AppCompatActivity {
                                     }
                                 }
 
-
+                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 problemsnum++;
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("100에서 7을 뺀 결과 값을 입력하세요.");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
 
@@ -403,65 +386,91 @@ public class TestActivity extends AppCompatActivity {
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score += 1;
                                 answerEditText.setText("");
-
+                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("전 문제의 결과 값에 7을 뺀 결과 값을 입력하세요.");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 14:
                                 if(!answerEditText.getText().toString().equals("")&&
-                                        (answerEditText.getText().toString().contains(buffer[0]))&&(answerEditText.getText().toString().contains(buffer[1]))&&(answerEditText.getText().toString().contains(buffer[2])))
+                                        (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score += 1;
+
+                                Log.d("TAG", "score1: "+score);
                                 Log.d("TAG", "answer1: "+problems.get(problemsnum).answer);
                                 problemsnum++;
                                 answerEditText.setText("");
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("세 가지 물건의 이름을 입력하세요.");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 15:
-                                if(!answerEditText.getText().toString().equals("")&&
-                                        (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
-                                    score += 1;
-                                problemsnum++;
-                                is = am.open(problems.get(problemsnum).url+".png");
-                                bm= BitmapFactory.decodeStream(is);
-                                exampleImageView.setImageBitmap(bm);
+                                String answer2 = problems.get(problemsnum).answer;
+                                StringTokenizer token = new StringTokenizer(answer2,",");
+                                String[] buffer = new String[token.countTokens()];
+                                i=0;
+                                int temp =0;
+                                while(token.hasMoreTokens()) {
+                                    buffer[i] = token.nextToken();
+                                    i++;
+                                }
+                                Log.d("TAG", "bufferlength: "+buffer.length);
+                                    for(i=0;i<buffer.length;i++){
+                                        if(answerEditText.getText().toString().contains(buffer[i])){
+                                            score+=1;
+                                            Log.d("TAG", "temp: "+temp);
+                                        }
+                                        else
+                                            continue;
+                                    }
 
-                                answerEditText.setText("");
-                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
-                                str = problems.get(problemsnum).example;
-                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+
+                                    Log.d("TAG", "score1: "+score);
+                                    problemsnum++;
+                                    is = am.open(problems.get(problemsnum).url+".png");
+                                    bm= BitmapFactory.decodeStream(is);
+                                    exampleImageView.setImageBitmap(bm);
+
+                                    answerEditText.setText("");
+                                    exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                    str = problems.get(problemsnum).example;
+                                    answerEditText.setHint("그림의 이름을 입력하세요.");
+                                    tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 16:
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
-                                    score+=1;
-                                Log.d("TAG", "answer2: "+problems.get(problemsnum).answer);
-                                Log.d("TAG", "score2: "+score);
-                                problemsnum++;
+                                    score += 1;
 
+                                Log.d("TAG", "score1: "+score);
+                                problemsnum++;
                                 is = am.open(problems.get(problemsnum).url+".png");
                                 bm= BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
 
-
                                 answerEditText.setText("");
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
+                                answerEditText.setHint("그림의 이름을 입력하세요.");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 break;
                             case 17:
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score+=1;
+
+                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
+                                answerEditText.setText("");
                                 exampleButton.setEnabled(false);
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
                                 str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
                                 answerEditText.setEnabled(false);
+                                answerEditText.setHint("하는 말을 듣고 들으신 내용을 입력하세요.");
                                 tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
                                 new Handler().postDelayed(new Runnable() {//tts출력후 음성인식 시작
                                     @Override
@@ -482,36 +491,95 @@ public class TestActivity extends AppCompatActivity {
                             case 18:
                                 Log.d("TAG", "speak: "+speak);
                                 answerEditText.setEnabled(true);
-                                if(!answerEditText.getText().toString().equals("")&&
-                                        (answerEditText.getText().toString().equals(speak)))
-                                    score+=1;
-                                problemsnum++;
 
+                                if(problems.get(problemsnum).answer.equals(speak))
+                                    score+=1;
+
+                                Log.d("TAG", "score1: "+score);
+                                problemsnum++;
+                                answerEditText.setText("");
+
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                answerEditText.setHint("사람이 위치하고 있는 층수를 입력하세요.");
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+                                is = am.open(problems.get(problemsnum).url+".png");
+                                bm= BitmapFactory.decodeStream(is);
+                                exampleImageView.setImageBitmap(bm);
+
+                                break;
+
+
+                            case 19:
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
+                                score+=1;
+
+                                Log.d("TAG", "score1: "+score);
+                                problemsnum++;
+                                answerEditText.setText("");
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                answerEditText.setHint("현재 계신곳의 장소를 입력하세요.");
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+                                break;
+                            case 20:
+                            case 21:
+                            case 22:
+                                if(!answerEditText.getText().toString().equals("")&&
+                                        (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
+                                    score+=1;
+
+                                Log.d("TAG", "score1: "+score);
+                                problemsnum++;
+                                answerEditText.setText("");
+                                exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
+                                str = problems.get(problemsnum).example;
+                                answerEditText.setHint("그림을 보고 해당 답을 입력하세요");
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//첫 매개변수: 문장   두번째 매개변수:Flush 기존의 음성 출력 끝음 Add: 기존의 음성출력을 이어서 출력
+                                is = am.open(problems.get(problemsnum).url+".png");
+                                bm= BitmapFactory.decodeStream(is);
+                                exampleImageView.setImageBitmap(bm);
+                                break;
                         }
                     } else {
+                        if(!answerEditText.getText().toString().equals("")&&
+                                (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
+                            score+=1;
 
+                        score +=3;//3점문제를 구현을 하지 않아 빈 점수 채움
                         Intent loginIntent = new Intent(TestActivity.this, ResultActivity.class);
-                        boolean member = getIntent().getBooleanExtra("member",true);
-                        if(member){//회원
-                            loginIntent.putExtra("member",member);
-                            loginIntent.putExtra("score",score);
-                            //나중에 회원 ID 도 보내야한다 .
+                        boolean member = getIntent().getBooleanExtra("member", true);
+                        if (member) {//회원
+                            String uid = getIntent().getStringExtra("uid");
+                            loginIntent.putExtra("member", member);
+                            loginIntent.putExtra("score", score);
+                            loginIntent.putExtra("uid", uid);
+                            loginIntent.putExtra("state",state);
+                            loginIntent.putExtra("city",city);
+                            Log.d("TAG", "score============: "+score);
+
                             startActivity(loginIntent);
-                        }else{//비회원
+                            finish();
+                        } else {//비회원
                             String name = getIntent().getStringExtra("name");
                             String gender = getIntent().getStringExtra("gender");
                             String graduation = getIntent().getStringExtra("graduation");
-                            int age = getIntent().getIntExtra("age",0);
-                            loginIntent.putExtra("name",name);
-                            loginIntent.putExtra("gender",gender);
-                            loginIntent.putExtra("graduation",graduation);
-                            loginIntent.putExtra("age",age);
-                            loginIntent.putExtra("member",member);
-                            loginIntent.putExtra("score",score);
+                            int age = getIntent().getIntExtra("age", 0);
+                            //String Stringlatitude = latitude.toString();
+                            //String Stringlongitude = longitude.toString();
+                            loginIntent.putExtra("name", name);
+                            loginIntent.putExtra("gender", gender);
+                            loginIntent.putExtra("graduation", graduation);
+                            loginIntent.putExtra("age", age);
+                            loginIntent.putExtra("member", member);
+                            loginIntent.putExtra("score", score);
+                            loginIntent.putExtra("state",state);
+                            loginIntent.putExtra("city",city);
+                            Log.d("TAG", "speak: "+speak);
+                            Log.d("TAG", "score============: "+score);
                             startActivity(loginIntent);
                         }
-                        am.close();
-                        mainam.close();
 
                         //if 문을 걸어서 intent 이 member 를 false 비회원  이필요한거 다보낸다
 
@@ -623,15 +691,16 @@ public class TestActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);//위치관리자 생성
 
         GPSListener gpsListener = new GPSListener();
-        long minTime = 5000;//단위 millisecond
+        long minTime = 100;//단위 millisecond
         float minDistance = 10;//단위 m
 
         try{
-            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,minTime,minDistance,gpsListener);;//gps
-            //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime,minDistance,gpsListener);//네트워크
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,minTime,minDistance,gpsListener);;//gps
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime,minDistance,gpsListener);//네트워크
             //5초 마다 or 10m 이동할떄마다 업데이트   network는 gps에 비해 정확도가 떨어짐
 
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             if(location!=null){
                 latitude = location.getLatitude();
@@ -672,13 +741,13 @@ public class TestActivity extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> address = null;
         try{
-            address = geocoder.getFromLocation(lat,lng,3);//7은 최대 결과
+            address = geocoder.getFromLocation(lat,lng,3);//3은 최대 결과
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Address address1 = address.get(0);
-        //address.clear();
+        address.clear();
         return address1.getAddressLine(0).toString();
     }
     @Override
@@ -691,4 +760,5 @@ public class TestActivity extends AppCompatActivity {
         }
 
     }
-}*/
+}
+

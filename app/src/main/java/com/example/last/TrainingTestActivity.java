@@ -21,8 +21,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 import java.util.StringTokenizer;
+
+import static android.speech.tts.TextToSpeech.ERROR;
+
 public class TrainingTestActivity extends AppCompatActivity {
     ArrayList<Problem> problems;
     AssetManager am;
@@ -44,9 +48,9 @@ public class TrainingTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_training_test);
         Log.d("TAG", "dasddase1: ");
 
-        exampleTextView = findViewById(R.id.textView);
-        answerEditText = findViewById(R.id.answereditText);
-        exampleButton = findViewById(R.id.button);
+        exampleTextView = findViewById(R.id.exampleTextView);
+        answerEditText = findViewById(R.id.answerEditText);
+        exampleButton = findViewById(R.id.exampleButton);
         exampleImageView = findViewById(R.id.exampleImageView);
         am = getResources().getAssets();
         Log.d("TAG", "dasddase2: ");
@@ -112,7 +116,7 @@ public class TrainingTestActivity extends AppCompatActivity {
         }
 
 
-       /* tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+       tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if (status != ERROR) {
@@ -124,13 +128,13 @@ public class TrainingTestActivity extends AppCompatActivity {
 
                 }
             }
-        });*/
+        });
 
         count = 0;
-        Log.d("TAG", "a[count]: " + a[count]);
-        Log.d("TAG", "problems.size(): " + problems.size());
-        Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-        Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
+        //Log.d("TAG", "a[count]: " + a[count]);
+        //Log.d("TAG", "problems.size(): " + problems.size());
+        //Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
+        //Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
         am = getResources().getAssets();
         try {
             exampleTextView.setText(problems.get(a[count]).num + "." + problems.get(a[count]).example);//첫번째 문제의 문제 출력
@@ -159,26 +163,21 @@ public class TrainingTestActivity extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(answerEditText.getWindowToken(), 0);
                     //String strnum = problems.get(a[count]-1).num;
                     //int num1 = Integer.parseInt(strnum);
-                    Log.d("TAG", "a[count]: " + a[count]);
-                    Log.d("TAG", "problems.size(): " + problems.size());
-                    Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                    Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
+                    //Log.d("TAG", "a[count]: " + a[count]);
+                    //Log.d("TAG", "problems.size(): " + problems.size());
+                    //Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
+                    //Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
 
                     //Log.d("TAG", "텍스트 문제번호: " + num1);
                     switch (a[count]) {
                         case 1:
                         case 11://contains
-                            if (problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
+                            /*if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
                                 score += 1; //1번문제를 맞췄을시
-                            }
+                            }*/
 
 
 
-                            Log.d("TAG", "a[count]: " + a[count]);
-                            Log.d("TAG", "problems.size(): " + problems.size());
-                            Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score1: " + score);
                             StringTokenizer token = new StringTokenizer(answerEditText.getText().toString(), " ");
                             String[] buffer = new String[token.countTokens()];
                             while(token.hasMoreTokens()){
@@ -193,15 +192,31 @@ public class TrainingTestActivity extends AppCompatActivity {
                                 Log.d("TAG", "str " + str+"=====");
                                 if (problems.get(a[count]).answer.contains(str)) {
                                     i++;
-                                }else
-                                    Log.d("TAG", "falseeeeeeeeeeeeeeeeeeeeeeeeeee");  break;
+                                }else{
+                                    Log.d("TAG", "falseeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                    count++;
+                                    break;
+
+                                }
+
                             }
-                            count++;
-                            if(i==buffer.length)
+
+                            if(buffer.length!=0&&i==buffer.length)
                                 score+=1;
+
+                            Log.d("TAG", "a[count]1: " + a[count]);
+                            Log.d("TAG", "problems.size()1: " + problems.size());
+                            Log.d("TAG", "problem1: " + problems.get(a[count]).example);
+                            Log.d("TAG", "answer1: " + (problems.get(a[count]).answer) + "=====");
+                            Log.d("TAG", "getText1: " + answerEditText.getText().toString() + "=====");
+                            Log.d("TAG", "score11: " + score);
+                            Log.d("TAG", "break");
+                            count++;
                             try {
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
                                 exampleTextView.setText(problems.get(a[count]).num + "." + problems.get(a[count]).example);//첫번째 문제의 문제 출력
+                                String str = problems.get(a[count]).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//str문자열 음성 출력 및 QUEUE_FLUSH: 음성출력 전 출력메모리 리셋
                                 is = am.open(problems.get(a[count]).url + ".png");
                                 bm = BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
@@ -215,7 +230,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                             StringTokenizer token1 = new StringTokenizer(answerEditText.getText().toString(), " ");
                             String[] buffer1 = new String[token1.countTokens()];
                             StringTokenizer token2 = new StringTokenizer(problems.get(a[count]).answer, " ");
-                            String[] buffer2 = new String[token1.countTokens()];
+                            String[] buffer2 = new String[token2.countTokens()];
                             Log.d("TAG", "buffer111111111111111111111111: ");
                             while(token1.hasMoreTokens()){
                                 buffer1[i] = token1.nextToken();
@@ -223,33 +238,47 @@ public class TrainingTestActivity extends AppCompatActivity {
                             }
                             i=0;
                             Log.d("TAG", "buffer122222222222222222222222: ");
-                            while(token2.hasMoreTokens()){
-                                buffer2[i] = token2.nextToken();
-                                i++;
-                            }
-                            i=0;
-                            Log.d("TAG", "buffer13333333333333333333333: ");
-                            while (i < buffer2.length) {
-                                if (buffer1[i] .equals(buffer2[i])) {
-                                    Log.d("TAG", "buffer1: " + buffer1[i]);
-                                    Log.d("TAG", "buffer2: " + buffer2[i]);
-                                    temp += 1; //1번문제를 맞췄을시
+                            if(buffer1.length==5){
+                                while(token2.hasMoreTokens()){
+                                    buffer2[i] = token2.nextToken();
                                     i++;
-                                } else break;
-                            }
-                            if (temp == buffer2.length)
-                                score += 1;
+                                }
+                                i=0;
+                                Log.d("TAG", "buffer13333333333333333333333: ");
+                                while (i < buffer2.length) {
+                                    if (buffer1[i] .equals(buffer2[i])) {
+                                        Log.d("TAG", "buffer4444444444444444444444: ");
+                                        Log.d("TAG", "buffer1: " + buffer1[i]);
+                                        Log.d("TAG", "buffer2: " + buffer2[i]);
+                                        temp += 1; //1번문제를 맞췄을시
+                                        i++;
+                                    } else{
+                                        Log.d("TAG", "buffer55555555555555555555555555555: ");
+                                        count++;
+                                        break;
+                                    }
+                                }
+                                if (temp == buffer2.length){
+                                    Log.d("TAG", "buffer6666666666666666666666666666: ");
+                                    score += 1;
+                                }
 
-                            Log.d("TAG", "buffer2.length: " + buffer2.length);
-                            Log.d("TAG", "a[count]: " + a[count]);
-                            Log.d("TAG", "problems.size(): " + problems.size());
-                            Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score1: " + score);
+                            }
+
+                            Log.d("TAG", "break");
+                            Log.d("TAG", "buffer2.length2: " + buffer2.length);
+                            Log.d("TAG", "a[count]2: " + a[count]);
+                            Log.d("TAG", "problems.size()2: " + problems.size());
+                            Log.d("TAG", "problem2: " + problems.get(a[count]).example);
+                            Log.d("TAG", "answer2: " + (problems.get(a[count]).answer) + "=====");
+                            Log.d("TAG", "getText2: " + answerEditText.getText().toString() + "=====");
+                            Log.d("TAG", "score12: " + score);
                             count++;
                             try {
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
                                 exampleTextView.setText(problems.get(a[count]).num + "." + problems.get(a[count]).example);//첫번째 문제의 문제 출력
+                                String str = problems.get(a[count]).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//str문자열 음성 출력 및 QUEUE_FLUSH: 음성출력 전 출력메모리 리셋
                                 is = am.open(problems.get(a[count]).url + ".png");
                                 bm = BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
@@ -258,26 +287,27 @@ public class TrainingTestActivity extends AppCompatActivity {
                             }
                             break;
                         default:
-                            if (problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
+                            if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
                                 score += 1; //1번문제를 맞췄을시
                             }
-                            Log.d("TAG", "a[count]: " + a[count]);
-                            Log.d("TAG", "problems.size(): " + problems.size());
-                            Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score1: " + score);
+                            Log.d("TAG", "a[count]3: " + a[count]);
+                            Log.d("TAG", "problems.size()3: " + problems.size());
+                            Log.d("TAG", "problem3: " + problems.get(a[count]).example);
+                            Log.d("TAG", "answer3: " + (problems.get(a[count]).answer) + "=====");
+                            Log.d("TAG", "getText3: " + answerEditText.getText().toString() + "=====");
+                            Log.d("TAG", "score13: " + score);
                             count++;
                             try {
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
                                 exampleTextView.setText(problems.get(a[count]).num + "." + problems.get(a[count]).example);//첫번째 문제의 문제 출력
+                                String str = problems.get(a[count]).example;
+                                tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);//str문자열 음성 출력 및 QUEUE_FLUSH: 음성출력 전 출력메모리 리셋
                                 is = am.open(problems.get(a[count]).url + ".png");
                                 bm = BitmapFactory.decodeStream(is);
                                 exampleImageView.setImageBitmap(bm);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-
-
                             break;
                     }
                 } else {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,9 +315,9 @@ public class TrainingTestActivity extends AppCompatActivity {
                     switch (a[count]) {
                         case 1:
                         case 11://contains()
-                            if (problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
+                            /*if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
                                 score += 1; //1번문제를 맞췄을시
-                            }
+                            }*/
                             Log.d("TAG", "a[count]: " + a[count]);
                             Log.d("TAG", "problems.size(): " + problems.size());
                             Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
@@ -307,41 +337,48 @@ public class TrainingTestActivity extends AppCompatActivity {
                                 String str = buffer[i];
                                 str = str.replaceAll("\r\n","");
                                 if (problems.get(a[count]).answer.contains(str)) {
-                                    score += 1; //1번문제를 맞췄을시
                                     i++;
                                 } else
+                                    count++;
                                     break;
                             }
+
+
+                            if(buffer.length!=0&&i==buffer.length)
+                                score+=1;
                             break;
                         case 9://equals()
                             int temp = 0;
                             StringTokenizer token1 = new StringTokenizer(answerEditText.getText().toString(), " ");
                             String[] buffer1 = new String[token1.countTokens()];
                             StringTokenizer token2 = new StringTokenizer(problems.get(a[count]).answer, " ");
-                            String[] buffer2 = new String[token1.countTokens()];
+                            String[] buffer2 = new String[token2.countTokens()];
                             Log.d("TAG", "buffer111111111111111111111111: ");
                             while(token1.hasMoreTokens()){
                                 buffer1[i] = token1.nextToken();
                                 i++;
                             }
+
                             i=0;
                             Log.d("TAG", "buffer122222222222222222222222: ");
-                            while(token2.hasMoreTokens()){
-                                buffer2[i] = token2.nextToken();
-                                i++;
-                            }
-                            i=0;
-                            Log.d("TAG", "buffer13333333333333333333333: ");
-                            while (i < buffer2.length) {
-                                if (buffer1[i] .equals(buffer2[i])) {
-                                    Log.d("TAG", "buffer1: " + buffer1[i]);
-                                    Log.d("TAG", "buffer2: " + buffer2[i]);
-                                    temp += 1; //1번문제를 맞췄을시
+                            if (buffer1.length == 5) {
+                                while(token2.hasMoreTokens()){
+                                    buffer2[i] = token2.nextToken();
                                     i++;
-                                } else break;
+                                }
+                                i=0;
+                                Log.d("TAG", "buffer13333333333333333333333: ");
+                                while (i < buffer2.length) {
+                                    if (buffer1[i] .equals(buffer2[i])) {
+                                        Log.d("TAG", "buffer1: " + buffer1[i]);
+                                        Log.d("TAG", "buffer2: " + buffer2[i]);
+                                        temp += 1; //1번문제를 맞췄을시
+                                        i++;
+                                    } else break;
+                                }
+                                if (temp == buffer2.length)
+                                    score += 1;
                             }
-                            if (temp == buffer2.length)
-                                score += 1;
 
                             Log.d("TAG", "buffer2.length: " + buffer2.length);
                             Log.d("TAG", "a[count]: " + a[count]);
@@ -351,7 +388,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                             Log.d("TAG", "score1: " + score);
                             break;
                         default:
-                            if (problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
+                            if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
                                 score += 1; //1번문제를 맞췄을시
                             }
                             Log.d("TAG", "score1: " + score);
@@ -364,7 +401,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                     Intent loginIntent = new Intent(TrainingTestActivity.this, TrainingResultActivity.class);
                     loginIntent.putExtra("score",score);
                     startActivity(loginIntent);
-
+                    finish();
                     //am.close();
                     //mainam.close();
 
@@ -375,6 +412,14 @@ public class TrainingTestActivity extends AppCompatActivity {
 
         });
     }
+    protected void onDestroy () {
+        super.onDestroy();
 
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+
+    }
 }
 
