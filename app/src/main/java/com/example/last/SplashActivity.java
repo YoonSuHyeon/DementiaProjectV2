@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -16,13 +17,11 @@ public class SplashActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
-        final int PERMISSION = 1;
-        if (Build.VERSION.SDK_INT >= 23) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO,Manifest.permission.INTERNET,Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
-        }
+
+
 
         Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 3000); // 1초 후에 hd handler 실행  3000ms = 3초
+        hd.postDelayed(new splashhandler(), 3000); // 3.5초 후에 hd handler 실행  3000ms = 3초
 
 
 

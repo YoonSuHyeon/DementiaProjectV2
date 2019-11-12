@@ -6,15 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraUpdate;
@@ -41,8 +46,11 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
 
     double x, y;
-    String[]buffer;
+    String[] buffer;
     Location location;
+    Button find, call;
+    TextView t1, t2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +60,12 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
         NaverMapSdk.getInstance(this).setClient(
                 new NaverMapSdk.NaverCloudPlatformClient("tx7ojyc1re"));
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+
+        find = findViewById(R.id.findbutton);
+        call = findViewById(R.id.casllbutton);
+        t1 = findViewById(R.id.textView1);
+        t2 = findViewById(R.id.textView2);
+
         intent = getIntent();
         String str = intent.getStringExtra("list");
 
@@ -62,6 +76,36 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
             buffer[i] = token.nextToken();
             i++;
         }//0: 주소 1: 전화번호 2: y좌표 3: x좌표 4: 병원이름
+        t1.setText("병원명:" + buffer[4]);
+        t2.setText("주소" + buffer[0]);
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ComponentName compName = new ComponentName("com.samsung.android.contacts","com.android.contacts.activities.CallLogActivity");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.map.naver.com/search2/search.nhn?query=" + buffer[4]));
+                startActivity(intent);
+
+            }
+        });
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + buffer[1]));
+                if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    Activity#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for Activity#requestPermissions for more details.
+                    return;
+                }
+                startActivity(intent);
+            }
+        });
         x = Double.parseDouble(buffer[3]);//x좌표
         y = Double.parseDouble(buffer[2]);//y좌표
         locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
