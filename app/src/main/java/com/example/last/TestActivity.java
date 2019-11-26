@@ -294,7 +294,6 @@ public class TestActivity extends AppCompatActivity {
 
                                 answerEditText.setText("");
                                 problemsnum++;
-                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
@@ -308,7 +307,6 @@ public class TestActivity extends AppCompatActivity {
                                     score += 1; //1번문제를 맞췄을시
                                 problemsnum++;
                                 answerEditText.setText("");
-                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
@@ -327,7 +325,6 @@ public class TestActivity extends AppCompatActivity {
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 exampleButton.setEnabled(false);//버튼 비활성화
                                 answerEditText.setEnabled(false);//답안 적는 필드 비활성화
-                                Log.d("TAG", "score1: "+score);
                                 str = problems.get(problemsnum).example;
                                 answerEditText.setHint("단어를 듣고 기억한 후 말하는 문제입니다.");
                                 str += "단어가 출력됩니다. 집중하세요.  " + problems.get(problemsnum).answer;
@@ -350,7 +347,6 @@ public class TestActivity extends AppCompatActivity {
 
                                 break;
                             case 9:
-                                Log.d("TAG", "speak: "+speak);
                                 answerEditText.setEnabled(true);
                                 String answer = problems.get(problemsnum).answer;
                                 StringTokenizer tokens = new StringTokenizer(answer,",");
@@ -368,7 +364,6 @@ public class TestActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                Log.d("TAG", "score1: "+score);
                                 //////다음문제 출력
                                 problemsnum++;
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
@@ -386,7 +381,6 @@ public class TestActivity extends AppCompatActivity {
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score += 1;
                                 answerEditText.setText("");
-                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
                                 str = problems.get(problemsnum).example;
@@ -397,9 +391,6 @@ public class TestActivity extends AppCompatActivity {
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score += 1;
-
-                                Log.d("TAG", "score1: "+score);
-                                Log.d("TAG", "answer1: "+problems.get(problemsnum).answer);
                                 problemsnum++;
                                 answerEditText.setText("");
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
@@ -417,18 +408,13 @@ public class TestActivity extends AppCompatActivity {
                                     buffer[i] = token.nextToken();
                                     i++;
                                 }
-                                Log.d("TAG", "bufferlength: "+buffer.length);
                                     for(i=0;i<buffer.length;i++){
                                         if(answerEditText.getText().toString().contains(buffer[i])){
                                             score+=1;
-                                            Log.d("TAG", "temp: "+temp);
                                         }
                                         else
                                             continue;
                                     }
-
-
-                                    Log.d("TAG", "score1: "+score);
                                     problemsnum++;
                                     is = am.open(problems.get(problemsnum).url+".png");
                                     bm= BitmapFactory.decodeStream(is);
@@ -445,7 +431,6 @@ public class TestActivity extends AppCompatActivity {
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score += 1;
 
-                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
                                 is = am.open(problems.get(problemsnum).url+".png");
                                 bm= BitmapFactory.decodeStream(is);
@@ -462,7 +447,6 @@ public class TestActivity extends AppCompatActivity {
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
                                     score+=1;
 
-                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
                                 answerEditText.setText("");
                                 exampleButton.setEnabled(false);
@@ -489,13 +473,11 @@ public class TestActivity extends AppCompatActivity {
 
                                 break;
                             case 18:
-                                Log.d("TAG", "speak: "+speak);
                                 answerEditText.setEnabled(true);
 
                                 if(problems.get(problemsnum).answer.equals(speak))
                                     score+=1;
 
-                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
                                 answerEditText.setText("");
 
@@ -513,9 +495,8 @@ public class TestActivity extends AppCompatActivity {
                             case 19:
                                 if(!answerEditText.getText().toString().equals("")&&
                                         (answerEditText.getText().toString().equals(problems.get(problemsnum).answer)))
-                                score+=1;
+                                    score+=1;
 
-                                Log.d("TAG", "score1: "+score);
                                 problemsnum++;
                                 answerEditText.setText("");
                                 exampleTextView.setText((num1+1) +"." + problems.get(problemsnum).example);
@@ -557,7 +538,7 @@ public class TestActivity extends AppCompatActivity {
                             loginIntent.putExtra("uid", uid);
                             loginIntent.putExtra("state",state);
                             loginIntent.putExtra("city",city);
-                            Log.d("TAG", "score============: "+score);
+
 
                             startActivity(loginIntent);
                             finish();
@@ -576,9 +557,8 @@ public class TestActivity extends AppCompatActivity {
                             loginIntent.putExtra("score", score);
                             loginIntent.putExtra("state",state);
                             loginIntent.putExtra("city",city);
-                            Log.d("TAG", "speak: "+speak);
-                            Log.d("TAG", "score============: "+score);
                             startActivity(loginIntent);
+                            finish();
                         }
 
                         //if 문을 걸어서 intent 이 member 를 false 비회원  이필요한거 다보낸다

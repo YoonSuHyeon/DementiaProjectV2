@@ -46,14 +46,12 @@ public class TrainingTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_test);
-        Log.d("TAG", "dasddase1: ");
 
         exampleTextView = findViewById(R.id.exampleTextView);
         answerEditText = findViewById(R.id.answerEditText);
         exampleButton = findViewById(R.id.exampleButton);
         exampleImageView = findViewById(R.id.exampleImageView);
         am = getResources().getAssets();
-        Log.d("TAG", "dasddase2: ");
         problems = new ArrayList<>();
         int i, j;
         a = new int[16];
@@ -69,9 +67,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                 }
             }
         }
-        for (i = 0; i < 16; i++){
-            Log.d("TAG", "==a[]: "+a[i]);
-        }
+
 
         try {
             is = am.open("traning.txt");
@@ -83,8 +79,7 @@ public class TrainingTestActivity extends AppCompatActivity {
             while ((teasd = br.readLine()) != null) {
                 stringBuilder.append(teasd);
             }
-            //Log.d("TAG", "teasd: "+teasd);
-            // t.append(stringBuilder);
+
 
             tokens = new StringTokenizer(stringBuilder.toString(), "*");
             while (tokens.hasMoreTokens()) {
@@ -99,7 +94,6 @@ public class TrainingTestActivity extends AppCompatActivity {
 
 
             }
-            Log.d("TAG", "rrrrrrfse123: "+ problems.size());
 
             is.close();
 
@@ -131,10 +125,7 @@ public class TrainingTestActivity extends AppCompatActivity {
         });
 
         count = 0;
-        //Log.d("TAG", "a[count]: " + a[count]);
-        //Log.d("TAG", "problems.size(): " + problems.size());
-        //Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-        //Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
+
         am = getResources().getAssets();
         try {
             exampleTextView.setText(problems.get(a[count]).num + "." + problems.get(a[count]).example);//첫번째 문제의 문제 출력
@@ -152,7 +143,6 @@ public class TrainingTestActivity extends AppCompatActivity {
             }
         }
 
-        Log.d("TAG", "problems.size(): " + problems.size());
 
         exampleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,14 +151,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                     int i = 0;
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);//키보드 강제 내리기
                     imm.hideSoftInputFromWindow(answerEditText.getWindowToken(), 0);
-                    //String strnum = problems.get(a[count]-1).num;
-                    //int num1 = Integer.parseInt(strnum);
-                    //Log.d("TAG", "a[count]: " + a[count]);
-                    //Log.d("TAG", "problems.size(): " + problems.size());
-                    //Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                    //Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
 
-                    //Log.d("TAG", "텍스트 문제번호: " + num1);
                     switch (a[count]) {
                         case 1:
                         case 11://contains
@@ -185,15 +168,15 @@ public class TrainingTestActivity extends AppCompatActivity {
                                 i++;
                             }
                             i=0;
-                            Log.d("TAG", "buffer.length:///// " +buffer.length);
+
                             while (i < buffer.length) {
                                 String str = buffer[i];
                                 str = str.replaceAll("\r\n","");
-                                Log.d("TAG", "str " + str+"=====");
+
                                 if (problems.get(a[count]).answer.contains(str)) {
                                     i++;
                                 }else{
-                                    Log.d("TAG", "falseeeeeeeeeeeeeeeeeeeeeeeeeee");
+
                                     count++;
                                     break;
 
@@ -204,13 +187,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                             if(buffer.length!=0&&i==buffer.length)
                                 score+=1;
 
-                            Log.d("TAG", "a[count]1: " + a[count]);
-                            Log.d("TAG", "problems.size()1: " + problems.size());
-                            Log.d("TAG", "problem1: " + problems.get(a[count]).example);
-                            Log.d("TAG", "answer1: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText1: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score11: " + score);
-                            Log.d("TAG", "break");
+
                             count++;
                             try {
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
@@ -231,48 +208,34 @@ public class TrainingTestActivity extends AppCompatActivity {
                             String[] buffer1 = new String[token1.countTokens()];
                             StringTokenizer token2 = new StringTokenizer(problems.get(a[count]).answer, " ");
                             String[] buffer2 = new String[token2.countTokens()];
-                            Log.d("TAG", "buffer111111111111111111111111: ");
+
                             while(token1.hasMoreTokens()){
                                 buffer1[i] = token1.nextToken();
                                 i++;
                             }
                             i=0;
-                            Log.d("TAG", "buffer122222222222222222222222: ");
+
                             if(buffer1.length==5){
                                 while(token2.hasMoreTokens()){
                                     buffer2[i] = token2.nextToken();
                                     i++;
                                 }
                                 i=0;
-                                Log.d("TAG", "buffer13333333333333333333333: ");
                                 while (i < buffer2.length) {
                                     if (buffer1[i] .equals(buffer2[i])) {
-                                        Log.d("TAG", "buffer4444444444444444444444: ");
-                                        Log.d("TAG", "buffer1: " + buffer1[i]);
-                                        Log.d("TAG", "buffer2: " + buffer2[i]);
                                         temp += 1; //1번문제를 맞췄을시
                                         i++;
                                     } else{
-                                        Log.d("TAG", "buffer55555555555555555555555555555: ");
                                         count++;
                                         break;
                                     }
                                 }
                                 if (temp == buffer2.length){
-                                    Log.d("TAG", "buffer6666666666666666666666666666: ");
                                     score += 1;
                                 }
 
                             }
 
-                            Log.d("TAG", "break");
-                            Log.d("TAG", "buffer2.length2: " + buffer2.length);
-                            Log.d("TAG", "a[count]2: " + a[count]);
-                            Log.d("TAG", "problems.size()2: " + problems.size());
-                            Log.d("TAG", "problem2: " + problems.get(a[count]).example);
-                            Log.d("TAG", "answer2: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText2: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score12: " + score);
                             count++;
                             try {
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
@@ -290,12 +253,7 @@ public class TrainingTestActivity extends AppCompatActivity {
                             if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
                                 score += 1; //1번문제를 맞췄을시
                             }
-                            Log.d("TAG", "a[count]3: " + a[count]);
-                            Log.d("TAG", "problems.size()3: " + problems.size());
-                            Log.d("TAG", "problem3: " + problems.get(a[count]).example);
-                            Log.d("TAG", "answer3: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText3: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score13: " + score);
+
                             count++;
                             try {
                                 answerEditText.setText("");    //답맞는지 확인후 문제를 바꿔준다 .
@@ -315,25 +273,16 @@ public class TrainingTestActivity extends AppCompatActivity {
                     switch (a[count]) {
                         case 1:
                         case 11://contains()
-                            /*if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
-                                score += 1; //1번문제를 맞췄을시
-                            }*/
-                            Log.d("TAG", "a[count]: " + a[count]);
-                            Log.d("TAG", "problems.size(): " + problems.size());
-                            Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score1: " + score);
+
                             StringTokenizer token = new StringTokenizer(answerEditText.getText().toString(), " ");
                             String[] buffer = new String[token.countTokens()];
                             while(token.hasMoreTokens()){
                                 buffer[i]=token.nextToken();
-                                Log.d("TAG", "buffer:///// " +buffer[i]);
                                 i++;
                             }
-                            Log.d("TAG", "buffer.length:///// " +buffer.length);
+
                             i=0;
                             while (i < buffer.length) {
-                                Log.d("TAG", "buffer[i]: " +buffer[i]);
                                 String str = buffer[i];
                                 str = str.replaceAll("\r\n","");
                                 if (problems.get(a[count]).answer.contains(str)) {
@@ -353,21 +302,19 @@ public class TrainingTestActivity extends AppCompatActivity {
                             String[] buffer1 = new String[token1.countTokens()];
                             StringTokenizer token2 = new StringTokenizer(problems.get(a[count]).answer, " ");
                             String[] buffer2 = new String[token2.countTokens()];
-                            Log.d("TAG", "buffer111111111111111111111111: ");
                             while(token1.hasMoreTokens()){
                                 buffer1[i] = token1.nextToken();
                                 i++;
                             }
 
                             i=0;
-                            Log.d("TAG", "buffer122222222222222222222222: ");
                             if (buffer1.length == 5) {
                                 while(token2.hasMoreTokens()){
                                     buffer2[i] = token2.nextToken();
                                     i++;
                                 }
                                 i=0;
-                                Log.d("TAG", "buffer13333333333333333333333: ");
+
                                 while (i < buffer2.length) {
                                     if (buffer1[i] .equals(buffer2[i])) {
                                         Log.d("TAG", "buffer1: " + buffer1[i]);
@@ -380,22 +327,13 @@ public class TrainingTestActivity extends AppCompatActivity {
                                     score += 1;
                             }
 
-                            Log.d("TAG", "buffer2.length: " + buffer2.length);
-                            Log.d("TAG", "a[count]: " + a[count]);
-                            Log.d("TAG", "problems.size(): " + problems.size());
-                            Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
-                            Log.d("TAG", "score1: " + score);
+
                             break;
                         default:
                             if (!answerEditText.getText().toString().equals("")&&problems.get(a[count]).answer.contains(answerEditText.getText().toString())) {
                                 score += 1; //1번문제를 맞췄을시
                             }
-                            Log.d("TAG", "score1: " + score);
-                            Log.d("TAG", "a[count]: " + a[count]);
-                            Log.d("TAG", "problems.size(): " + problems.size());
-                            Log.d("TAG", "answer: " + (problems.get(a[count]).answer) + "=====");
-                            Log.d("TAG", "getText: " + answerEditText.getText().toString() + "=====");
+
                             break;
                     }
                     Intent loginIntent = new Intent(TrainingTestActivity.this, TrainingResultActivity.class);

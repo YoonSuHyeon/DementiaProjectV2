@@ -58,13 +58,13 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map_view);
         NaverMapSdk.getInstance(this).setClient(
-                new NaverMapSdk.NaverCloudPlatformClient("tx7ojyc1re"));
+                new NaverMapSdk.NaverCloudPlatformClient("pwas4thlqq"));
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
-        find = findViewById(R.id.findbutton);
-        call = findViewById(R.id.casllbutton);
-        t1 = findViewById(R.id.textView1);
-        t2 = findViewById(R.id.textView2);
+        find = findViewById(R.id.findbutton);//병원 길찾기 버튼
+        call = findViewById(R.id.casllbutton);//병원 전화걸기 버튼
+        t1 = findViewById(R.id.textView1);//병원정보를 보여주는 텍스트뷰
+        t2 = findViewById(R.id.textView2);//병원정보를 보여주는 텍스트뷰
 
         intent = getIntent();
         String str = intent.getStringExtra("list");
@@ -81,7 +81,6 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ComponentName compName = new ComponentName("com.samsung.android.contacts","com.android.contacts.activities.CallLogActivity");
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.map.naver.com/search2/search.nhn?query=" + buffer[4]));
                 startActivity(intent);
 
@@ -130,7 +129,6 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
         location = locationMgr.getLastKnownLocation(bestProvider);
         mapView = findViewById(R.id.map_view);
         mapView.getMapAsync(this);
-        Log.d("TAG", "getStringExtra: "+str);
         Location locationA = new Location("A");
         locationA.setLatitude(location.getLatitude());//위도
         locationA.setLongitude(location.getLongitude());//경도
@@ -152,8 +150,6 @@ public class HosmapActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(@NonNull NaverMap naverMap) {
 
         LatLng coord = new LatLng(x,y);
-        Log.d("TAG", "x: "+x);
-        Log.d("TAG", "y: "+y);
         //mapView.onStart();
         Marker marker = new Marker();
         naverMap.moveCamera(CameraUpdate.scrollTo(coord));

@@ -44,7 +44,7 @@ public class MapActivity extends AppCompatActivity {
         city  = intent.getStringExtra("city");
         code =  new HashMap<String,String>();
         code.put("강남구","110001");code.put("강동구","110002");code.put("강서구","110003");code.put("관악구","110004");code.put("구로구","110005");code.put("도봉구","110006");
-        code.put("원주시","320400");
+        code.put("원주시","320400");// 현재 자신의 GPS값을 통해 얻은 주소를 지역코드로 변환
 
         Iterator<String> iterator = code.keySet().iterator();
         while(iterator.hasNext()){//hashmap의 key를 파싱
@@ -56,7 +56,7 @@ public class MapActivity extends AppCompatActivity {
 
         Log.d("TAG","value"+value);
         String StrUrl = "http://apis.data.go.kr/B551182/hospInfoService/getHospBasisList";
-        String ServiceKey = "LjJVA0wW%2BvsEsLgyJaBLyTywryRMuelTIYxsWnQTaPpxdZjpuxVCdCtyNxvObDmBJ57VVaSi3%2FerYKQFQmKs8g%3D%3D";
+        String ServiceKey = "ia%2BWZP4Bo7U5pMEpmqmUw3nDb71jG4SgpHULit6rJIz5h3lDkjd6kP9yK08opcY%2Feol5VgQjhmipDXrZC0aT9w%3D%3D";
         String TotalUrl = StrUrl + "?ServiceKey=" + ServiceKey + "&sgguCd="+value+"&dgsbjtCd=06";
         DownLoad1 d1 = new DownLoad1();
         Log.d("TAG","DownLoad1");
@@ -91,7 +91,6 @@ public class MapActivity extends AppCompatActivity {
             boolean ho_XPos = false;
             boolean ho_YPos = false;
             try{
-                Log.d("TAG","XmlPullParserFactory");
                 XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
                 xmlPullParserFactory.setNamespaceAware(true);
                 XmlPullParser xmlPullParser = xmlPullParserFactory.newPullParser();
@@ -106,27 +105,21 @@ public class MapActivity extends AppCompatActivity {
                         switch (tag_name) {
 
                             case "resultCode":
-                                Log.d("TAG","tag_name"+tag_name);
                                 ho_resultCode = true;
                                 break;
                             case "yadmNm":
-                                Log.d("TAG","tag_name"+tag_name);
                                 ho_yadmNm = true;
                                 break;
                             case "addr":
-                                Log.d("TAG","tag_name"+tag_name);
                                 ho_addr = true;
                                 break;
                             case "telno":
-                                Log.d("TAG","tag_name"+tag_name);
                                 ho_telno = true;
                                 break;
                             case "XPos":
-                                Log.d("TAG","tag_name"+tag_name);
                                 ho_XPos = true;
                                 break;
                             case "YPos":
-                                Log.d("TAG","tag_name"+tag_name);
                                 ho_YPos = true;
                                 break;
                         }
@@ -138,14 +131,12 @@ public class MapActivity extends AppCompatActivity {
                         if(resultCode.equals("00")){
                             if(ho_addr){//병원주소 0
                                 addr = xmlPullParser.getText();
-                                Log.d("TAG","addr"+addr);
                                 information+=addr+"/";
 
                                 ho_addr=false;
                             }
                             if(ho_telno){//병원 전화번호 1
                                 telno = xmlPullParser.getText();
-                                Log.d("TAG","telno"+telno);
                                 //textView.append(count+"]"+telno+"\n");
                                 information = information+telno+"/";
 
@@ -153,7 +144,6 @@ public class MapActivity extends AppCompatActivity {
                             }
                             if(ho_XPos){//병원 위치 X좌표  3
                                 XPos = xmlPullParser.getText();
-                                Log.d("TAG","XPos"+XPos);
                                 //textView.append(count+"]"+XPos+"\n");
                                 information =information+ XPos+"/";
 
@@ -161,7 +151,6 @@ public class MapActivity extends AppCompatActivity {
                             }
                             if(ho_YPos){//병원 위치 Y좌표  2
                                 YPos = xmlPullParser.getText();
-                                Log.d("TAG","YPos"+YPos);
                                 //textView.append(count+"]"+YPos+"\n");
                                 information =information+ YPos+"/";
 
@@ -169,7 +158,6 @@ public class MapActivity extends AppCompatActivity {
                             }
                             if(ho_yadmNm){//병원명  4
                                 yadmNm = xmlPullParser.getText();
-                                Log.d("TAG","yadmNm"+yadmNm);
                                 String countname = Integer.toString(count+1);
                                 String name = countname + "번" +yadmNm + "\n";
                                 //totalyadmNm = totalyadmNm + name;//병원 목록 음성 출력
@@ -177,7 +165,6 @@ public class MapActivity extends AppCompatActivity {
 
                                 list.add(information);
                                 information="";
-                                Log.d("TAG", "information: "+information);
                                 count++;
                                 ho_yadmNm = false;
                             }
@@ -187,7 +174,6 @@ public class MapActivity extends AppCompatActivity {
                         ;
                     }
                     eventType = xmlPullParser.next();
-                    Log.d("TAG","information2"+information);
                 }
 
 
@@ -195,56 +181,33 @@ public class MapActivity extends AppCompatActivity {
             }
             catch (Exception e) {
             }
-            Log.d("TAG", "num: "+num);
-            Log.d("TAG", "count: "+count);
             if(count==10) {
-                Log.d("TAG", "onPostExecute: ");
                 ArrayList<String> list1 = new ArrayList<String>();
                 for (int i = 0; i < count; i++) {
-                    //for (int j = 0; j < num - i - 1; j++) {
-                        Log.d("TAG", "list.get("+i+")=="+list.get(i));
-                        StringTokenizer token1 = new StringTokenizer(list.get(i),"/");// 긱 병원의 정보들을 하나의 세트로 토큰 실시
-                        String[] buffer1 = new String[token1.countTokens()];
+                    StringTokenizer token1 = new StringTokenizer(list.get(i),"/");// 긱 병원의 정보들을 하나의 세트로 토큰 실시
+                    String[] buffer1 = new String[token1.countTokens()];
 
 
-                        int count1 = 0;
-                        while (token1.hasMoreTokens()) {//병원 별로 정보 token
-                            buffer1[count1] = token1.nextToken();
-                            buffer1[count1] = buffer1[count1].replaceAll("\n", "");
-                            count1++;
+                    int count1 = 0;
+                    while (token1.hasMoreTokens()) {//병원 별로 정보 token
+                        buffer1[count1] = token1.nextToken();
+                        buffer1[count1] = buffer1[count1].replaceAll("\n", "");
+                        count1++;
+                    }
+                    list1.add("병원명:"+buffer1[4]+"\r\n주소:"+buffer1[0]+"\r\n전화번호"+buffer1[1]);
+                    count1 = 0;
+                    ListView listView = findViewById(R.id.listview);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MapActivity.this, android.R.layout.simple_list_item_1,list1);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getApplicationContext(),HosmapActivity.class);
+                            intent.putExtra("list",list.get(position));
+                            startActivity(intent);
                         }
-                        list1.add("병원명:"+buffer1[4]+"\r\n주소:"+buffer1[0]+"\r\n전화번호"+buffer1[1]);
-                        count1 = 0;
-                        ListView listView = findViewById(R.id.listview);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MapActivity.this, android.R.layout.simple_list_item_1,list1);
-                        listView.setAdapter(adapter);
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Intent intent = new Intent(getApplicationContext(),HosmapActivity.class);
-                                intent.putExtra("list",list.get(position));
-                                startActivity(intent);
-                            }
-                        });
-                        /*while (token2.hasMoreTokens()) {
-                            buffer2[count1] = token2.nextToken();
-                            buffer2[count1] = buffer2[count1].replaceAll("\n", "");
-                            count1++;
-                        }8?
-                        /*int a = Integer.parseInt(buffer1[5]);
-                        int b = Integer.parseInt(buffer2[5]);
-                        if (a > b) {
-                            list2.add(list.get(j));
-                            list.set(j, list.get(j + 1));
-                            list.set(j + 1, list2.get(0));
-                            list2.clear();
-                        }
-                    }*/
+                    });
                 }
-                /*for(int i=0;i<num;i++){
-                    //textView.append(list.get(i)+"\n");
-                    totalyadmNm += list.get(i)+"\n";
-                }*/
             }
 
         }
@@ -253,7 +216,6 @@ public class MapActivity extends AppCompatActivity {
             HttpURLConnection com = null;
             BufferedReader bufferedReader;
             try{
-                Log.d("TAG", "DownLoadUrl1: ");
                 URL url = new URL(myurl);
                 com = (HttpURLConnection) url.openConnection();
                 com.setRequestMethod("GET");
@@ -262,12 +224,9 @@ public class MapActivity extends AppCompatActivity {
 
                 String total = null;
                 getData = "";
-                Log.d("TAG", "DownLoadUrl2: ");
                 while((total=bufferedReader.readLine())!=null){
                     getData += total;
-                    Log.d("TAG", "getData: ");
                 }
-                Log.d("TAG", "DownLoadUrl3: ");
                 return getData;
             }finally {
                 com.disconnect();
